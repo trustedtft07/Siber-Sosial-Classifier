@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siber Sosial - Cognitive Domain Hoax Classifier</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="title-section">
+      <h1>Sistem Pemantauan Siber Sosial &bull; Deteksi Disinformasi</h1>
+      <p class="subtitle">Platform Verifikasi Tiga-Layer Terintegrasi (Kategori 04: Cognitive Domain &bull; PUSSIBERAD TNI AD)</p>
+    </div>
+    <div class="status-badges">
+      <span class="badge badge-dark">Air-Gapped Ready</span>
+      <span class="badge badge-green">Engine Online</span>
+      <span class="badge badge-dark">Model: 3-Layer Hybrid</span>
+    </div>
+  </header>
+
+  <main class="grid-container">
+    <!-- Kolom Kiri: Input dan Skenario -->
+    <section class="card">
+      <h2 class="card-title">Input Narasi & Pemantauan</h2>
+      
+      <div class="form-group">
+        <label>Pilih Sampel Skenario Pengujian:</label>
+        <div class="preset-container">
+          <button type="button" class="preset-btn" onclick="loadPreset(1)">
+            [Disinformasi Pertahanan] Hoax Rekrutmen Bintara TNI AD Berbayar
+          </button>
+          <button type="button" class="preset-btn" onclick="loadPreset(2)">
+            [Provokasi Militer] Video Latihan Diklaim Pergerakan Kudeta Istana
+          </button>
+          <button type="button" class="preset-btn" onclick="loadPreset(3)">
+            [Berita Valid] Satgas Bantuan Kesehatan TNI AD Tanggap Bencana
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input-text">Teks Narasi / Pesan Berantai (WA/Telegram/Medsos):</label>
+        <textarea id="input-text" rows="6" placeholder="Tempelkan pesan atau teks berita yang dicurigai di sini..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="input-url">Tautan Rujukan / URL Sumber (Opsional):</label>
+        <input type="text" id="input-url" placeholder="https://domain-berita.com/artikel-terkait">
+      </div>
+
+      <button type="button" id="btn-analyze" class="submit-btn" onclick="analyzeContent()">
+        ANALISIS NARASI KOGNITIF
+      </button>
+    </section>
+
+    <!-- Kolom Kanan: Hasil Analisis & XAI -->
+    <section class="card">
+      <h2 class="card-title">Hasil Penilaian Risiko Kognitif</h2>
+      
+      <div class="risk-header">
+        <div>
+          <div class="score-display">
+            <span id="val-score" class="score-number">--</span>
+            <span class="score-scale">/ 100</span>
+          </div>
+          <div style="font-size: 0.8rem; color: #9ca3af; margin-top: 0.2rem;">Hoax Risk Score</div>
+        </div>
+        <div style="text-align: right;">
+          <span id="val-classification" class="badge badge-dark">MENUNGGU INPUT</span>
+          <div id="val-domain" style="font-size: 0.8rem; color: #38bdf8; margin-top: 0.4rem;">-</div>
+        </div>
+      </div>
+
+      <div class="subscores-grid">
+        <div class="subscore-item">
+          <div class="subscore-label">Layer 1: Gaya Bahasa</div>
+          <div id="sub-linguistic" class="subscore-val">--%</div>
+        </div>
+        <div class="subscore-item">
+          <div class="subscore-label">Layer 2: Bukti RAG</div>
+          <div id="sub-evidence" class="subscore-val">--%</div>
+        </div>
+        <div class="subscore-item">
+          <div class="subscore-label">Layer 3: Reputasi Sumber</div>
+          <div id="sub-source" class="subscore-val">--%</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 0.85rem; color: #9ca3af; text-transform: uppercase; margin-bottom: 0.4rem;">Rincian Verifikasi Lapisan:</h3>
+      
+      <div id="box-linguistic" class="evidence-box">
+        <strong>Analisis Linguistik:</strong> Belum ada data dianalisis.
+      </div>
+
+      <div id="box-evidence" class="evidence-box">
+        <strong>Pencocokan Bukti Fakta:</strong> Belum ada data dianalisis.
+      </div>
+
+      <div id="box-source" class="evidence-box">
+        <strong>Kredibilitas Sumber:</strong> Belum ada data dianalisis.
+      </div>
+
+      <h3 style="font-size: 0.85rem; color: #9ca3af; text-transform: uppercase; margin-bottom: 0.4rem;">Explainable AI & Rekomendasi Taktis:</h3>
+      
+      <div id="box-brief" class="brief-box">
+        Ringkasan intelijen taktis akan muncul di sini setelah pemrosesan selesai.
+      </div>
+
+      <ul id="list-factors" style="font-size: 0.8rem; color: #cbd5e1; margin-left: 1.2rem; margin-bottom: 0.75rem;">
+        <li>Menunggu input narasi untuk mengekstrak faktor risiko kognitif.</li>
+      </ul>
+
+      <div id="box-recommendation" class="recommendation-box">
+        Rekomendasi Operasional: Sistem siap menerima input teks.
+      </div>
+    </section>
+  </main>
+
+  <section class="card">
+    <h2 class="card-title">Pangkalan Data Verifikasi Resmi (Knowledge Base Terindeks)</h2>
+    <div style="overflow-x: auto;">
+      <table class="kb-table">
+        <thead>
+          <tr>
+            <th style="width: 120px;">ID Klarifikasi</th>
+            <th style="width: 180px;">Kategori Ancaman</th>
+            <th>Klaim yang Dibantah / Diverifikasi</th>
+            <th style="width: 100px;">Status</th>
+            <th style="width: 160px;">Instansi Sumber</th>
+          </tr>
+        </thead>
+        <tbody id="kb-tbody">
+          <tr><td colspan="5" style="text-align: center; color: #9ca3af;">Memuat basis pengetahuan...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

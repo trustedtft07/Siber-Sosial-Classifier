@@ -1,0 +1,48 @@
+{
+  "urgency_triggers": [
+    "viralkan",
+    "sebarkan",
+    "sebelum dihapus",
+    "jangan buka",
+    "darurat",
+    "info a1",
+    "dari orang dalam",
+    "grup sebelah",
+    "peringatan keras",
+    "jangan abaikan",
+    "share ke grup",
+    "sebar luaskan",
+    "wajib tahu",
+    "bocoran rahasia",
+    "awas bahaya"
+  ],
+  "conspiracy_triggers": [
+    "dibungkam media",
+    "fakta disembunyikan",
+    "kebohongan publik",
+    "konspirasi",
+    "antek",
+    "rekayasa",
+    "sandiwara",
+    "disembunyikan pemerintah",
+    "media bungkam"
+  ],
+  "authority_impersonation": [
+    "perintah panglima",
+    "instruksi rahasia",
+    "surat edaran rahasia",
+    "bocoran intelijen",
+    "jalur khusus bintara",
+    "jalur titipan tni",
+    "surat resmi tni palsu",
+    "panggilan seleksi langsung lolos"
+  ],
+  "sara_polarization": [
+    "pribumi",
+    "antek asing",
+    "komunis bangkit",
+    "penyerbuan etnis",
+    "konflik agama",
+    "perang saudara"
+  ]
+}

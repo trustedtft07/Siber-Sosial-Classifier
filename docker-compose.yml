@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  siber-classifier:
+    build: .
+    container_name: siber-sosial-classifier
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - USE_LOCAL_LLM=false
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - OLLAMA_MODEL=qwen2.5:1.5b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / C-extensions
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Environment files
+.env
+.env.*
+!.env.example
+.env.local
+
+# Secrets & certificates
+*.pem
+*.key
+*.cer
+*.crt
+*.pfx
+id_rsa
+id_ed25519
+secrets.json
+*.secret
+
+# Credentials & cloud tokens
+credentials.json
+service-account*.json
+.aws/
+.gcloud/
+token.json
+
+# Dependencies & virtual environments
+node_modules/
+dist/
+build/
+target/
+venv/
+.venv/
+env/
+ENV/
+
+# System / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs, databases & runtime artifacts
+*.log
+*.sqlite3
+chroma_db/
+.pytest_cache/
+.coverage
+htmlcov/
