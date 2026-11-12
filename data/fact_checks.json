@@ -98,5 +98,15 @@
     "source_agency": "Dispenad TNI AD",
     "reference_url": "https://tniad.mil.id/tni-ad-terjunkan-satgas-bencana-erupsi",
     "date": "2026-11-01"
+  },
+  {
+    "id": "FC-DIS-011",
+    "claim": "Latihan terjun payung Kostrad di Garut menimpa pemukiman warga sipil.",
+    "fact": "Latihan penerjunan berlangsung di dropping zone steril Ciwidey dan seluruh peterjun mendarat selamat.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Penerangan Kostrad",
+    "reference_url": "https://tniad.mil.id/klarifikasi-latihan-peterjun-kostrad",
+    "date": "2026-11-12"
   }
 ]
