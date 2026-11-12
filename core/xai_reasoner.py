@@ -38,6 +38,8 @@ class XAIReasoner:
             triggers.append(f"narasi konspirasi ({', '.join(linguistic_data['conspiracy_triggers'])})")
         if linguistic_data.get("sara_triggers"):
             triggers.append(f"polarisasi SARA ({', '.join(linguistic_data['sara_triggers'])})")
+        if linguistic_data.get("anonymous_claim_triggers"):
+            triggers.append(f"klaim anonim tanpa sumber rujukan ({', '.join(linguistic_data['anonymous_claim_triggers'])})")
 
         if triggers:
             reasons.append(f"Ditemukan indikator manipulasi bahasa: {'; '.join(triggers)}.")
