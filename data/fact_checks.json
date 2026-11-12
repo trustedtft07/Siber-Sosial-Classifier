@@ -98,5 +98,255 @@
     "source_agency": "Dispenad TNI AD",
     "reference_url": "https://tniad.mil.id/tni-ad-terjunkan-satgas-bencana-erupsi",
     "date": "2026-11-01"
+  },
+  {
+    "id": "FC-REAL-001",
+    "claim": "TNI berstatus Siaga 1, masyarakat diminta persiapan darurat rumah tangga: stok makanan dan gas. Info dari Kompas.com, viralkan!",
+    "fact": "Unggahan Facebook yang memakai logo Kompas.com itu adalah konten hasil modifikasi dengan tambahan narasi hoaks. Kapuspen TNI menegaskan tidak ada arahan apa pun kepada masyarakat sipil untuk menyiapkan atau menyetok kebutuhan rumah tangga; instruksi Siaga 1 hanya untuk internal TNI.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Kapuspen TNI / Komdigi",
+    "reference_url": "https://kabar24.bisnis.com/read/20260326/621/1962354/komdigi-ungkap-hoaks-siaga-1-tni-hingga-isu-bbm-rp16000",
+    "date": "2026-03-26"
+  },
+  {
+    "id": "FC-REAL-002",
+    "claim": "Presiden Prabowo kerahkan alutsista karena Malaysia dan Singapura ancam kedaulatan RI.",
+    "fact": "Isi video tidak sesuai narasi judulnya. Video hanya membahas penolakan Malaysia dan Singapura atas gagasan Menkeu Purbaya terkait pajak Selat Malaka. TurnBackHoax menilai klaim ini salah.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/articles/33817-salah-prabowo-kerahkan-alutsista-karena-malaysia-dan-singapura-ancam-kedaulatan-ri",
+    "date": "2026-04-29"
+  },
+  {
+    "id": "FC-REAL-003",
+    "claim": "Rusia akan membangun pangkalan militer di Papua.",
+    "fact": "Klaim ini dinyatakan hoaks dalam Laporan Isu Hoaks Komdigi dan diperiksa oleh TurnBackHoax.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/articles/33376-salah-rusia-bakal-bikin-pangkalan-militer-di-papua",
+    "date": "2026-04-11"
+  },
+  {
+    "id": "FC-REAL-004",
+    "claim": "Video pengiriman 18.000 personel TNI ke Aceh.",
+    "fact": "Video yang beredar dengan narasi pengiriman 18.000 personel TNI ke Aceh dinyatakan hoaks oleh TurnBackHoax dan dilaporkan dalam Laporan Isu Hoaks Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/2025/09/30/salah-video-pengiriman-18-000-personel-tni-ke-aceh/",
+    "date": "2025-09-30"
+  },
+  {
+    "id": "FC-REAL-005",
+    "claim": "Prajurit TNI jadi provokator demo anarkis dan sejumlah anggota TNI ditangkap Polri. Sebarkan sebelum dihapus!",
+    "fact": "Kapuspen TNI menyatakan banyak foto, video, dan konten viral terkait prajurit dalam demo adalah hoaks yang dipakai untuk mendiskreditkan TNI. Tidak ada anggota TNI yang ditangkap Polri; mereka sedang menjalankan tugas intelijen deteksi dini dan cegah dini.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Puspen TNI (Kapuspen TNI)",
+    "reference_url": "https://rmol.id/pertahanan/read/2025/09/06/679009/tni-bantah-deretan-hoaks-terkait-prajurit-dalam-demo-anarkis",
+    "date": "2025-09-05"
+  },
+  {
+    "id": "FC-REAL-006",
+    "claim": "Pasukan TNI mendatangi Polda Metro Jaya terkait kasus korupsi yang sedang diusut.",
+    "fact": "Mabes TNI membantah isu kedatangan prajurit ke Polda Metro Jaya dan mengimbau masyarakat mewaspadai narasi provokatif di media sosial.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Isu Publik",
+    "source_agency": "Mabes TNI (Kapuspen TNI)",
+    "reference_url": "https://kabar24.bisnis.com/read/20260709/16/1986808/mabes-tni-bantah-datangi-polda-metro-jaya-minta-waspadai-provokasi",
+    "date": "2026-07-09"
+  },
+  {
+    "id": "FC-REAL-007",
+    "claim": "TNI AL tangkap kapal tongkang Malaysia pengangkut emas ilegal.",
+    "fact": "Video dengan narasi penangkapan kapal Malaysia pengangkut emas ilegal oleh TNI AL dinyatakan hoaks oleh TurnBackHoax dan dilaporkan Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/articles/30614",
+    "date": "2025-12-09"
+  },
+  {
+    "id": "FC-REAL-008",
+    "claim": "Panglima TNI menerbitkan telegram Siaga 1 untuk seluruh jajaran TNI (TR/283/2026) untuk menguji kesiapsiagaan di tengah konflik Timur Tengah.",
+    "fact": "Benar. Telegram Panglima TNI Nomor TR/283/2026 ditandatangani Asops Panglima TNI pada 1 Maret 2026. Panglima menjelaskan Siaga 1 adalah uji kesiapsiagaan personel dan materiil, bukan seruan bagi masyarakat sipil.",
+    "verdict": "BENAR",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Mabes TNI / Panglima TNI",
+    "reference_url": "https://kabar24.bisnis.com/read/20260311/15/1959464/ini-penjelasan-panglima-tni-soal-penerapan-siaga-1-di-indonesia",
+    "date": "2026-03-11"
+  },
+  {
+    "id": "FC-REAL-009",
+    "claim": "Pendaftaran calon prajurit TNI AD gelombang dua dibuka mulai 20 April 2026 melalui situs resmi ad.rekrutmentni.mil.id tanpa dipungut biaya.",
+    "fact": "Benar. Rekrutmen gelombang dua dibuka sejak 20 April 2026 hingga kuota terpenuhi dengan pendaftaran online lewat laman resmi ad.rekrutmentni.mil.id.",
+    "verdict": "BENAR",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "TNI AD (diberitakan Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/KZmCQL0P-tni-ad-buka-rekrutmen-gratis-ini-jadwal-syarat-dan-cara-daftarnya",
+    "date": "2026-04-22"
+  },
+  {
+    "id": "FC-REAL-010",
+    "claim": "Pendaftaran Tamtama PK TNI AD Gelombang I TA 2026 dibuka 23 Desember 2025 sampai 29 Januari 2026 dan TNI AD tidak memungut biaya apa pun.",
+    "fact": "Benar. Jadwal pendaftaran Tamtama TNI AD Gelombang I TA 2026 adalah 23 Desember 2025 hingga 29 Januari 2026, dan TNI AD tidak memungut biaya selama proses pendaftaran.",
+    "verdict": "BENAR",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "TNI AD (diberitakan Good News From Indonesia)",
+    "reference_url": "https://www.goodnewsfromindonesia.id/2026/01/09/kapan-rekrutmen-tni-ad-2026-dibuka-ini-jadwal-syarat-dan-cara-daftarnya",
+    "date": "2026-01-09"
+  },
+  {
+    "id": "FC-REAL-011",
+    "claim": "Informasi rincian biaya masuk Akmil 2024: biaya pendaftaran, tes masuk, pendidikan, seragam, dan biaya tambahan lainnya.",
+    "fact": "Hoaks. Melalui situs resmi tniad.mil.id, Kadispenad menegaskan seleksi Taruna Akmil tidak dipungut biaya.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://tniad.mil.id/tni-ad-tegaskan-seleksi-taruna-akmil-tidak-dipungut-biaya/",
+    "date": "2024-08-02"
+  },
+  {
+    "id": "FC-REAL-012",
+    "claim": "Seleksi Taruna Akmil TNI AD tidak dipungut biaya apa pun.",
+    "fact": "Benar. Kadispenad menegaskan melalui situs resmi tniad.mil.id bahwa seleksi Taruna Akmil tidak dipungut biaya.",
+    "verdict": "BENAR",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://tniad.mil.id/tni-ad-tegaskan-seleksi-taruna-akmil-tidak-dipungut-biaya/",
+    "date": "2024-08-02"
+  },
+  {
+    "id": "FC-REAL-013",
+    "claim": "Jembatan Gantung Pongpet di Pangandaran ambruk total!",
+    "fact": "Dispenad memastikan struktur jembatan tidak ambruk keseluruhan. Struktur utama tetap pada posisinya; yang bermasalah adalah tali sling sisi kiri yang terlepas dari sistem pengikat utama. Kapasitas jembatan 50 orang, namun jumlah warga yang melintas setelah peresmian melebihi kapasitas.",
+    "verdict": "MISLEADING",
+    "threat_category": "Manipulasi Isu Publik",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://www.jpnn.com/news/jembatan-gantung-pongpet-di-pangandaran-ambruk-tni-ad-angkat-bicara",
+    "date": "2026-08-31"
+  },
+  {
+    "id": "FC-REAL-014",
+    "claim": "TNI gusur sekolah demi bangun Kopdes Merah Putih di NTT.",
+    "fact": "Kapuspen TNI menegaskan bukan menggusur sekolah dan Kopdes Merah Putih tidak dibangun menggantikan sekolah; lokasinya berada di belakang sekolah. Narasi penggusuran bermula dari potongan video tanpa konteks utuh.",
+    "verdict": "MISLEADING",
+    "threat_category": "Manipulasi Isu Publik",
+    "source_agency": "Puspen TNI (Kapuspen TNI)",
+    "reference_url": "https://news.okezone.com/read/2026/06/09/337/3223528/gusur-sekolah-demi-kopdes-merah-putih-di-ntt-ini-tanggapan-kapuspen-tni",
+    "date": "2026-06-09"
+  },
+  {
+    "id": "FC-REAL-015",
+    "claim": "Video demo besar dan kerusuhan jelang HUT ke-81 RI, bersiap turun ke jalan!",
+    "fact": "Menko Polkam menyatakan video tersebut hoaks dan merupakan rekaman lama. Pemerintah bersama TNI, Polri, dan BIN menelusuri pemilik akun penyebar video bernarasi provokatif.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Isu Publik",
+    "source_agency": "Kemenko Polkam",
+    "reference_url": "https://kabar24.bisnis.com/read/20260805/16/1993908/menkopolkam-tegaskan-video-demonstrasi-jelang-hut-ke-81-ri-hoaks",
+    "date": "2026-08-05"
+  },
+  {
+    "id": "FC-REAL-016",
+    "claim": "Video prajurit TNI mendobrak pintu dan mengambil komputer di Kantor Bupati Intan Jaya, Papua.",
+    "fact": "Koops TNI Habema membantah personelnya terlibat pendobrakan dan pengambilan komputer. Hasil klarifikasi menyatakan narasi yang beredar tidak sesuai fakta.",
+    "verdict": "SALAH",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Koops TNI Habema",
+    "reference_url": "https://www.jpnn.com/news/tni-klarifikasi-video-viral-pendobrakan-pintu-di-kantor-bupati-intan-jaya-ternyata",
+    "date": "2026-07-25"
+  },
+  {
+    "id": "FC-REAL-017",
+    "claim": "Panglima TNI Agus Subiyanto ucapkan selamat Hari Kemerdekaan West Papua 1 Desember 2025.",
+    "fact": "Klaim tidak benar. Hasil pemeriksaan TurnBackHoax dengan alat pendeteksi AI menunjukkan video tersebut tidak asli.",
+    "verdict": "SALAH",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/articles/31057",
+    "date": "2025-12-23"
+  },
+  {
+    "id": "FC-REAL-018",
+    "claim": "Foto prajurit TNI membentangkan syal \"I Love Israel\".",
+    "fact": "Foto tersebut dinyatakan tidak benar dalam klarifikasi Kompas Cek Fakta dan dilaporkan dalam Laporan Isu Hoaks Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Polarisasi SARA",
+    "source_agency": "Komdigi / Kompas Cek Fakta",
+    "reference_url": "https://ppid.sukoharjokab.go.id/wp-content/uploads/2026/04/11-April-2026-Isu-Hoaks-Harian.pdf",
+    "date": "2026-04-11"
+  },
+  {
+    "id": "FC-REAL-019",
+    "claim": "Kemenag beri bantuan dana Rp200 juta sampai Rp2 miliar untuk masyarakat non-Muslim semester pertama 2025/2026.",
+    "fact": "Hoaks. Kementerian Agama melalui akun resmi Instagram @kemenag_ri menegaskan surat penyaluran Bantuan Dana DAP (Direct Aid Program) bekerja sama dengan Australia adalah palsu. TurnBackHoax mengategorikannya penipuan.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Kementerian Agama RI",
+    "reference_url": "https://turnbackhoax.id/articles/32490-penipuan-bantuan-dana-untuk-masyarakat-non-muslim-2026",
+    "date": "2026-02-24"
+  },
+  {
+    "id": "FC-REAL-020",
+    "claim": "Tautan pendaftaran CPNS Kementerian Pertahanan Tahun 2026, klik link untuk daftar sekarang.",
+    "fact": "Tautan pendaftaran tersebut adalah penipuan menurut TurnBackHoax dan dilaporkan dalam Laporan Isu Hoaks Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Komdigi / TurnBackHoax (Mafindo)",
+    "reference_url": "https://turnbackhoax.id/articles/35806-penipuan-tautan-pendaftaran-cpns-kementerian-pertahanan",
+    "date": "2026-07-24"
+  },
+  {
+    "id": "FC-REAL-021",
+    "claim": "Pesan WhatsApp berisi file APK bernama \"Surat Panggilan Polda Metro Jaya\" dari akun berlogo Polda Metro Jaya.",
+    "fact": "Pesan tersebut adalah penipuan. Dokumen berekstensi APK dipakai dengan berbagai modus (undangan pernikahan, kurir paket, surat tilang, tagihan BPJS) untuk meretas data pribadi hingga menguras rekening.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Humas Polri",
+    "reference_url": "https://portal.humas.polri.go.id/post/klarifikasi-hoax-imposter-content-apk-surat-panggilan-polda-metro-jaya",
+    "date": "2024-05-04"
+  },
+  {
+    "id": "FC-REAL-022",
+    "claim": "File APK \"PPS PEMILU 2024\" beredar lewat WhatsApp, buka untuk cek data.",
+    "fact": "File APK tersebut merupakan modus penipuan yang mirip modus APK undangan pernikahan, sebagaimana diklarifikasi Pemkab Sukoharjo.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Pemkab Sukoharjo",
+    "reference_url": "https://twitter.com/sukoharjo_kab/status/1731545391278280902",
+    "date": "2023-12-04"
+  },
+  {
+    "id": "FC-REAL-023",
+    "claim": "Video Romo Koko umumkan bantuan modal usaha dari Australia untuk umat Katolik dan Kristen.",
+    "fact": "Klaim tersebut tidak benar berdasarkan klarifikasi Kompas Cek Fakta dan Laporan Isu Hoaks Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Komdigi / Kompas Cek Fakta",
+    "reference_url": "https://www.kompas.com/cekfakta/read/2026/06/29/190800382/-hoaks-video-romo-koko-umumkan-bantuan-modal-usaha-dari-australia",
+    "date": "2026-06-29"
+  },
+  {
+    "id": "FC-REAL-024",
+    "claim": "Akun Facebook atas nama Bupati Barito Timur M. Yamin meminta uang dan data.",
+    "fact": "Akun tersebut palsu dan mencatut nama serta foto Bupati. Pemerintah mengimbau masyarakat tidak mudah percaya dan selalu mengecek terlebih dahulu.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber",
+    "source_agency": "Pemkab Barito Timur / Komdigi",
+    "reference_url": "https://mediacenter.baritotimurkab.go.id/waspada-akun-facebook-palsu-bupati-barito-timur-imbau-warga-tidak-mudah-percaya/",
+    "date": "2026-03-25"
+  },
+  {
+    "id": "FC-REAL-025",
+    "claim": "TNI AD melarang keras prajurit dan satuan TNI AD meminta bantuan Lebaran.",
+    "fact": "Benar. Kadispenad Brigjen TNI Tatang Subarna menegaskan pimpinan TNI AD melarang keras prajurit dan satuan meminta bantuan Lebaran, dan mengimbau masyarakat melapor ke satuan terdekat bila menemukan pelanggaran.",
+    "verdict": "BENAR",
+    "threat_category": "Manipulasi Isu Publik",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://kabar24.bisnis.com/read/20220427/15/1527836/tni-ad-larang-keras-prajurit-minta-bantuan-lebaran",
+    "date": "2022-04-27"
   }
 ]
