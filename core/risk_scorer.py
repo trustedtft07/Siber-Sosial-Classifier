@@ -3,6 +3,10 @@ class RiskScorer:
     WEIGHT_EVIDENCE = 0.45
     WEIGHT_SOURCE = 0.25
 
+    ZERO_DAY_MAX_SIMILARITY = 0.25
+    ZERO_DAY_MIN_RISK = 0.70
+    ZERO_DAY_FLOOR = 0.45  # = batas bawah status MISLEADING / PROVOKATIF
+
     def calculate(self, linguistic_data: dict, evidence_data: list[dict], source_data: dict, raw_text: str) -> dict:
         linguistic_score = linguistic_data.get("linguistic_score", 0.0)
         source_risk = source_data.get("source_risk", 0.40)
@@ -31,6 +35,17 @@ class RiskScorer:
 
         if sim_score >= 0.65 and verdict == "SALAH":
             final_composite = max(final_composite, 0.78)
+
+        # Zero-Day Rumor: isu baru yang belum ada di database (kemiripan rendah), tetapi gaya bahasa
+        # DAN sumbernya sama-sama sangat mencurigakan. Minimal dinaikkan ke MISLEADING / PROVOKATIF
+        # (skor >= 45), supaya tidak lolos hanya karena belum ada klarifikasinya.
+        zero_day_rumor = (
+            sim_score < self.ZERO_DAY_MAX_SIMILARITY
+            and linguistic_score > self.ZERO_DAY_MIN_RISK
+            and source_risk > self.ZERO_DAY_MIN_RISK
+        )
+        if zero_day_rumor:
+            final_composite = max(final_composite, self.ZERO_DAY_FLOOR)
 
         scaled_score = round(final_composite * 100, 1)
 
@@ -65,6 +80,7 @@ class RiskScorer:
                 "source_risk": round(source_risk * 100, 1),
             },
             "best_match": best_match if sim_score >= 0.25 else None,
+            "zero_day_rumor": zero_day_rumor,
         }
 
     def _determine_threat_domain(self, text: str, linguistic_data: dict, best_match: dict | None) -> str:
