@@ -1,6 +1,6 @@
 /**
  * Siber Sosial - Cognitive Domain Hoax Classifier
- * Frontend Controller & Tactical Dashboard Logic
+ * Frontend Controller
  * Peran: Orang 3 (Frontend Architecture & Client Logic)
  */
 
@@ -63,7 +63,7 @@ function loadPreset(id) {
 }
 
 // ============================================================================
-// 2. ANALISIS TUNGGAL & RENDERING HASIL (SUBTASK 3.1)
+// 2. Pemeriksaan Tunggal & Render Hasil
 // ============================================================================
 
 function updateProgressBar(barEl, percentage) {
@@ -92,7 +92,7 @@ async function analyzeContent() {
 
   const btn = document.getElementById("btn-analyze");
   btn.disabled = true;
-  btn.textContent = "MEMPROSES ANALISIS TIGA LAYER...";
+  btn.textContent = "Memeriksa...";
 
   try {
     const res = await fetch("/api/analyze", {
@@ -110,13 +110,13 @@ async function analyzeContent() {
     latestAnalysisData = data;
     renderAnalysis(data);
     saveToHistory(data, text || data.input_preview || url, url);
-    showToast("Analisis kognitif berhasil diselesaikan.", "success");
+    showToast("Pemeriksaan selesai.", "success");
   } catch (err) {
     showToast(`Terjadi kesalahan: ${err.message}`, "info");
     console.error("Analysis Error:", err);
   } finally {
     btn.disabled = false;
-    btn.textContent = "ANALISIS NARASI KOGNITIF";
+    btn.textContent = "Periksa Konten";
   }
 }
 
@@ -125,7 +125,7 @@ function renderAnalysis(data) {
   const layers = data.layers;
   const xai = data.explainable_ai;
 
-  // Skor Utama & Progress Bar (Subtask 3.1)
+  // Skor utama & progress bar
   const scoreEl = document.getElementById("val-score");
   scoreEl.textContent = risk.score;
 
@@ -133,13 +133,13 @@ function renderAnalysis(data) {
   classBadge.textContent = risk.classification;
 
   if (risk.score >= 70) {
-    scoreEl.style.color = "#ef4444";
+    scoreEl.style.color = "#dc2626";
     classBadge.className = "badge-status-pill badge-danger";
   } else if (risk.score >= 45) {
-    scoreEl.style.color = "#f59e0b";
+    scoreEl.style.color = "#d97706";
     classBadge.className = "badge-status-pill badge-warning";
   } else {
-    scoreEl.style.color = "#10b981";
+    scoreEl.style.color = "#16a34a";
     classBadge.className = "badge-status-pill badge-success";
   }
 
@@ -149,10 +149,10 @@ function renderAnalysis(data) {
   document.getElementById("val-domain").textContent = risk.threat_domain || "Netral / Terverifikasi";
   const actionEl = document.getElementById("val-action");
   if (actionEl) {
-    actionEl.textContent = risk.action_code ? `ACTION: ${risk.action_code}` : "";
+    actionEl.textContent = risk.action_code || "-";
   }
 
-  // Tiga Lapisan Sub-skor & Mini Progress Bar (Subtask 3.1)
+  // Sub-skor 3 lapisan
   const lingScore = risk.sub_scores.linguistic_score;
   const evidScore = risk.sub_scores.evidence_risk;
   const srcScore = risk.sub_scores.source_risk;
@@ -165,7 +165,7 @@ function renderAnalysis(data) {
   updateProgressBar(document.getElementById("bar-evidence"), evidScore);
   updateProgressBar(document.getElementById("bar-source"), srcScore);
 
-  // Layer 1 Detail & Triggers as Badges/Chips (Subtask 3.1)
+  // Detail indikator linguistik
   const lingBox = document.getElementById("box-linguistic");
   const lingTriggers = [
     ...(layers.linguistic.urgency_triggers || []),
@@ -188,7 +188,7 @@ function renderAnalysis(data) {
 
   lingBox.innerHTML = `
     <strong>Indikator Leksikal:</strong> ${chipsHtml}
-    <div style="margin-top: 0.4rem; font-size: 0.8rem; color: #6c757d;">
+    <div style="margin-top: 0.4rem; font-size: 0.78rem; color: #52525b;">
       <strong>Rasio Huruf Kapital:</strong> ${(layers.linguistic.caps_ratio * 100).toFixed(1)}% &bull; 
       <strong>Tanda Seru:</strong> ${layers.linguistic.exclamation_count} &bull; 
       <strong>Sensasional:</strong> ${layers.linguistic.is_sensational ? 'Ya' : 'Tidak'}
@@ -217,7 +217,7 @@ function renderAnalysis(data) {
   } else {
     evidBox.innerHTML = `
       <strong>Status Bukti Fakta:</strong> Belum ada arsip klarifikasi yang cocok (&le; 25%). 
-      <span style="color: #d97706; font-weight: 600;">Dianalisis sebagai narasi berkembang baru (Zero-Day Rumor).</span>
+      <span style="color: #b45309; font-weight: 600;">Narasi baru belum tercatat di arsip rujukan.</span>
       ${contradictionHtml}
     `;
   }
@@ -238,7 +238,7 @@ function renderAnalysis(data) {
   }
 
   srcBox.innerHTML = `
-    <strong>Tier Sumber:</strong> <code style="color: #3f6ad8; background-color: #e0f2fe; padding: 2px 6px; border-radius: 4px;">${escapeHtml(layers.source.source_tier)}</code> &bull; 
+    <strong>Tier Sumber:</strong> <span class="badge badge-dark">${escapeHtml(layers.source.source_tier)}</span> &bull; 
     <strong>Domain:</strong> ${escapeHtml(domainsStr)}<br>
     <strong>Catatan Kredibilitas:</strong> ${escapeHtml(layers.source.notes || 'Normal')}
     ${scrapeHtml}
@@ -252,12 +252,12 @@ function renderAnalysis(data) {
   if (xai.key_factors && xai.key_factors.length > 0) {
     factorsList.innerHTML = xai.key_factors.map(f => `<li>${escapeHtml(f)}</li>`).join("");
   } else {
-    factorsList.innerHTML = `<li>Tidak ada anomali kognitif signifikan.</li>`;
+    factorsList.innerHTML = `<li>Tidak ditemukan indikator risiko signifikan.</li>`;
   }
 }
 
 // ============================================================================
-// 3. GENERATOR LAPORAN TAKTIS & EKSPOR (SUBTASK 3.2)
+// 3. Generator Laporan & Ekspor
 // ============================================================================
 
 function generateTacticalReportText(data) {
@@ -268,13 +268,13 @@ function generateTacticalReportText(data) {
   const now = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
 
   let text = `================================================================================\n`;
-  text += `   LAPORAN INTELIJEN SIBER SOSIAL - SATUAN PEMANTAUAN KOGNITIF PUSSIBERAD\n`;
+  text += `   LAPORAN VERIFIKASI KONTEN - SIBER SOSIAL\n`;
   text += `================================================================================\n`;
   text += `WAKTU ANALISIS       : ${now} WIB\n`;
   text += `SKOR RISIKO HOAKS    : ${r.score} / 100\n`;
   text += `KLASIFIKASI ANCAMAN  : ${r.classification}\n`;
   text += `DOMAIN ANCAMAN       : ${r.threat_domain || '-'}\n`;
-  text += `KODE AKSI TAKTIS     : ${r.action_code || '-'}\n`;
+  text += `KODE TINDAKAN        : ${r.action_code || '-'}\n`;
   text += `--------------------------------------------------------------------------------\n`;
   text += `PRATINJAU INPUT NARASI:\n"${data.input_preview || '-'}"\n`;
   text += `--------------------------------------------------------------------------------\n`;
@@ -291,12 +291,12 @@ function generateTacticalReportText(data) {
   text += `  3. Reputasi Sumber & Pola Sebaran   : ${r.sub_scores.source_risk}%\n`;
   text += `     - Tier: ${l.source.source_tier} | Catatan: ${l.source.notes}\n`;
   text += `--------------------------------------------------------------------------------\n`;
-  text += `RINGKASAN INTELIJEN (TACTICAL BRIEF):\n${x.tactical_brief}\n\n`;
+  text += `RINGKASAN ANALISIS:\n${x.tactical_brief}\n\n`;
   text += `FAKTOR RISIKO UTAMA:\n`;
   (x.key_factors || []).forEach((f, idx) => {
     text += `  ${idx + 1}. ${f}\n`;
   });
-  text += `\nREKOMENDASI OPERASIONAL SATUAN:\n${x.counter_measure}\n`;
+  text += `\nTINDAK LANJUT:\n${x.counter_measure}\n`;
   text += `================================================================================\n`;
   return text;
 }
@@ -309,7 +309,7 @@ async function copyTacticalReport() {
   const report = generateTacticalReportText(latestAnalysisData);
   try {
     await navigator.clipboard.writeText(report);
-    showToast("Format Laporan Taktis berhasil disalin ke clipboard!", "success");
+    showToast("Laporan berhasil disalin ke clipboard.", "success");
   } catch (err) {
     showToast("Gagal menyalin: Izin clipboard tidak diberikan.", "info");
   }
@@ -330,7 +330,7 @@ function downloadReport(format) {
   } else {
     const reportText = generateTacticalReportText(latestAnalysisData);
     blob = new Blob([reportText], { type: "text/plain;charset=utf-8" });
-    filename = `Laporan-Taktis-Siber-${timestamp}.txt`;
+    filename = `Laporan-Verifikasi-${timestamp}.txt`;
   }
 
   const url = URL.createObjectURL(blob);
@@ -345,7 +345,7 @@ function downloadReport(format) {
 }
 
 // ============================================================================
-// 4. RIWAYAT PEMINDAIAN LOKAL / LOCALSTORAGE (SUBTASK 3.2)
+// 4. Riwayat Lokal (LocalStorage)
 // ============================================================================
 
 function saveToHistory(analysisData, rawText, rawUrl = "") {
@@ -392,11 +392,11 @@ function renderHistory() {
       else if (item.score >= 45) badgeClass = "badge-warning";
 
       return `
-        <li class="history-item" onclick="loadHistoryItem(${idx})">
+        <li class="history-item" data-history-index="${idx}">
           <span class="history-text" title="${escapeHtml(item.rawText || item.rawUrl || '')}">${escapeHtml(item.preview)}</span>
           <div class="history-meta">
-            <span style="font-size: 0.72rem; color: #6c757d;">${escapeHtml(item.timestamp)}</span>
-            <span class="badge ${badgeClass}" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;">${item.score}</span>
+            <span style="font-size: 0.72rem; color: #71717a;">${escapeHtml(item.timestamp)}</span>
+            <span class="badge ${badgeClass}">${item.score}</span>
           </div>
         </li>
       `;
@@ -434,7 +434,7 @@ function clearHistory() {
 }
 
 // ============================================================================
-// 5. LIVE SEARCH, FILTER & TAMBAH ARSIP (SUBTASK 3.3)
+// 5. Pencarian, Filter & Tambah Arsip
 // ============================================================================
 
 function syncCategoryFilterOptions() {
@@ -497,7 +497,7 @@ function filterKnowledgeBase() {
   });
 
   if (counterEl) {
-    counterEl.textContent = `Menampilkan ${filtered.length} dari ${cachedFactChecks.length} arsip klarifikasi terindeks.`;
+    counterEl.textContent = `Menampilkan ${filtered.length} dari ${cachedFactChecks.length} entri`;
   }
 
   if (filtered.length === 0) {
@@ -511,16 +511,16 @@ function filterKnowledgeBase() {
     else if (item.verdict === "MISLEADING") badgeClass = "badge-warning";
 
     const safeRefUrl = item.reference_url && /^https?:\/\//i.test(item.reference_url)
-      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: #3f6ad8; text-decoration: underline;">Tautan Rujukan</a>`
+      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.74rem; color: #2563eb; text-decoration: underline;">Tautan Rujukan</a>`
       : '';
 
     return `
       <tr>
         <td><code>${escapeHtml(item.id)}</code></td>
-        <td><span style="font-size: 0.8rem; font-weight: 600; color: #3f6ad8;">${escapeHtml(item.threat_category)}</span></td>
+        <td><span style="font-size: 0.78rem; font-weight: 500; color: #3f3f46;">${escapeHtml(item.threat_category)}</span></td>
         <td>
-          <div style="font-weight: 600; color: #212529; margin-bottom: 0.2rem;">${escapeHtml(item.claim)}</div>
-          <div style="font-size: 0.78rem; color: #6c757d;"><strong>Fakta:</strong> ${escapeHtml(item.fact)}</div>
+          <div style="font-weight: 600; color: #18181b; margin-bottom: 0.2rem;">${escapeHtml(item.claim)}</div>
+          <div style="font-size: 0.78rem; color: #52525b;"><strong>Fakta:</strong> ${escapeHtml(item.fact)}</div>
         </td>
         <td><span class="badge ${badgeClass}">${escapeHtml(item.verdict)}</span></td>
         <td>
@@ -540,7 +540,7 @@ function toggleAddFactCheckForm() {
   const isHidden = formEl.style.display === "none" || !formEl.style.display;
   formEl.style.display = isHidden ? "block" : "none";
   if (btnEl) {
-    btnEl.textContent = isHidden ? "Tutup Form" : "+ Tambah Arsip Baru";
+    btnEl.textContent = isHidden ? "Tutup Form" : "Tambah Entri";
   }
 }
 
@@ -567,7 +567,7 @@ async function submitNewFactCheck(e) {
 
   const btnSave = document.getElementById("btn-save-fc");
   btnSave.disabled = true;
-  btnSave.textContent = "MENYIMPAN KE ARSIP...";
+  btnSave.textContent = "Menyimpan...";
 
   try {
     const res = await fetch("/api/fact-checks", {
@@ -601,24 +601,116 @@ async function submitNewFactCheck(e) {
     console.error("Add FactCheck Error:", err);
   } finally {
     btnSave.disabled = false;
-    btnSave.textContent = "SIMPAN KE DATABASE";
+    btnSave.textContent = "Simpan";
   }
 }
 
 // ============================================================================
-// 6. BATCH SCANNER / PEMANTAUAN MASSAL (SUBTASK 3.4)
+// 6. Pemindaian Massal (Batch)
 // ============================================================================
 
-function handleBatchFileUpload(event) {
-  const file = event.target.files[0];
+const MAX_UPLOAD_BYTES = 512 * 1024;
+const ALLOWED_UPLOAD_EXTS = new Set(["txt", "csv"]);
+const BLOCKED_MULTI_EXTS = new Set([
+  "exe", "dll", "bat", "cmd", "sh", "ps1", "php", "phtml", "phar",
+  "py", "rb", "pl", "js", "mjs", "ts", "html", "htm", "svg", "jar",
+  "vbs", "scr", "com", "jsp", "asp", "aspx", "cgi", "hta", "msi",
+  "zip", "rar", "7z", "gz", "tar", "pdf"
+]);
+
+function hasBinaryMagicOrControlBytes(bytes) {
+  const header = Array.from(bytes.slice(0, 8)).map(b => String.fromCharCode(b)).join("");
+  if (
+    header.startsWith("MZ") ||
+    header.startsWith("\x7fELF") ||
+    header.startsWith("%PDF-") ||
+    header.startsWith("PK\x03\x04") ||
+    header.startsWith("Rar!") ||
+    header.startsWith("GIF8") ||
+    header.startsWith("#!") ||
+    (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4e && bytes[3] === 0x47) ||
+    (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff)
+  ) {
+    return true;
+  }
+  for (let i = 0; i < bytes.length; i += 1) {
+    const b = bytes[i];
+    if ((b >= 0 && b <= 8) || b === 11 || b === 12 || (b >= 14 && b <= 31)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+async function handleBatchFileUpload(event) {
+  const input = event.target;
+  const file = input.files[0];
   if (!file) return;
 
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    document.getElementById("batch-text").value = e.target.result;
-    showToast(`Berkas ${file.name} berhasil dimuat ke editor batch.`, "info");
+  const resetInput = () => {
+    input.value = "";
   };
-  reader.readAsText(file);
+
+  if (/[\\/\0]|\.\./.test(file.name) || file.name.length > 150) {
+    showToast("Nama berkas tidak valid.", "info");
+    resetInput();
+    return;
+  }
+
+  const parts = file.name.toLowerCase().split(".");
+  const ext = parts.length >= 2 ? parts[parts.length - 1] : "";
+  const midExts = parts.slice(1, -1);
+  if (!ALLOWED_UPLOAD_EXTS.has(ext) || midExts.some(p => BLOCKED_MULTI_EXTS.has(p))) {
+    showToast("Format berkas ditolak. Hanya gunakan .txt atau .csv.", "info");
+    resetInput();
+    return;
+  }
+
+  if (file.size === 0) {
+    showToast("Berkas kosong.", "info");
+    resetInput();
+    return;
+  }
+
+  if (file.size > MAX_UPLOAD_BYTES) {
+    showToast("Ukuran berkas melebihi batas maksimal 512 KB.", "info");
+    resetInput();
+    return;
+  }
+
+  try {
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    if (hasBinaryMagicOrControlBytes(bytes)) {
+      showToast("Berkas biner atau eksekutabel ditolak.", "info");
+      resetInput();
+      return;
+    }
+
+    const decoded = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    if (/<\s*(?:!doctype|html|script|svg|iframe|object|embed|\?php)\b/i.test(decoded)) {
+      showToast("Berkas mengandung tag HTML atau skrip yang tidak diizinkan.", "info");
+      resetInput();
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch("/api/analyze/batch/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(json.detail || "Berkas ditolak oleh server.");
+    }
+
+    document.getElementById("batch-text").value = json.text || "";
+    showToast(`Berkas ${json.filename || file.name} dimuat (${json.entry_count} entri).`, "success");
+  } catch (err) {
+    showToast(err.message || "Berkas harus berupa teks UTF-8 yang valid.", "info");
+    resetInput();
+  }
 }
 
 async function analyzeBatchContent() {
@@ -641,15 +733,15 @@ async function analyzeBatchContent() {
 
   const btn = document.getElementById("btn-batch-analyze");
   btn.disabled = true;
-  btn.textContent = `MEMINDAI ${items.length} NARASI...`;
+  btn.textContent = `Memindai ${items.length} entri...`;
 
   const resultsContainer = document.getElementById("batch-results-container");
   const countBadge = document.getElementById("batch-count-badge");
   const tbody = document.getElementById("batch-tbody");
 
   resultsContainer.style.display = "block";
-  countBadge.textContent = `Memproses 0 / ${items.length} narasi...`;
-  tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #38bdf8;">Sedang memproses pemindaian multi-narasi...</td></tr>`;
+  countBadge.textContent = `Memproses 0 / ${items.length}...`;
+  tbody.innerHTML = `<tr><td colspan="5" class="table-empty">Memproses pemindaian...</td></tr>`;
 
   const batchResults = [];
   const CHUNK_SIZE = 20;
@@ -708,10 +800,10 @@ async function analyzeBatchContent() {
       });
     }
 
-    countBadge.textContent = `Memproses ${Math.min(offset + CHUNK_SIZE, items.length)} / ${items.length} narasi...`;
+    countBadge.textContent = `Memproses ${Math.min(offset + CHUNK_SIZE, items.length)} / ${items.length}...`;
   }
 
-  countBadge.textContent = `${batchResults.length} Narasi Selesai Diproses`;
+  countBadge.textContent = `${batchResults.length} selesai`;
 
   tbody.innerHTML = batchResults.map(item => {
     let badgeClass = "badge-success";
@@ -722,7 +814,7 @@ async function analyzeBatchContent() {
       <tr>
         <td>${item.idx}</td>
         <td><code>${escapeHtml(item.preview)}</code></td>
-        <td><strong style="color: ${item.score >= 70 ? '#d92550' : item.score >= 45 ? '#f7b924' : '#3ac47d'};">${item.score}</strong> / 100</td>
+        <td><strong style="color: ${item.score >= 70 ? '#dc2626' : item.score >= 45 ? '#d97706' : '#16a34a'};">${item.score}</strong> / 100</td>
         <td><span class="badge ${badgeClass}">${escapeHtml(item.classification)}</span></td>
         <td><span class="badge badge-dark" style="font-size: 0.68rem;">${escapeHtml(item.action)}</span></td>
       </tr>
@@ -730,13 +822,9 @@ async function analyzeBatchContent() {
   }).join("");
 
   btn.disabled = false;
-  btn.textContent = "JALANKAN PEMINDAIAN MASSAL";
-  showToast(`Pemindaian massal untuk ${batchResults.length} narasi selesai!`, "success");
+  btn.textContent = "Jalankan Pemindaian";
+  showToast(`Pemindaian selesai (${batchResults.length} entri).`, "success");
 }
-
-// ============================================================================
-// 7. TOAST NOTIFICATIONS & UTILITY
-// ============================================================================
 
 function showToast(message, type = "info") {
   const container = document.getElementById("toast-container");
@@ -745,7 +833,7 @@ function showToast(message, type = "info") {
   const toast = document.createElement("div");
   toast.className = `toast toast-${type}`;
   toast.innerHTML = `
-    <span>${type === 'success' ? '✓' : 'ℹ'}</span>
+    <span class="toast-dot" aria-hidden="true"></span>
     <span>${escapeHtml(message)}</span>
   `;
 
@@ -772,7 +860,88 @@ function escapeHtml(text) {
 // 8. INISIALISASI HALAMAN
 // ============================================================================
 
+function toggleSidebarMenu() {
+  const sidebar = document.getElementById("app-sidebar");
+  if (sidebar) sidebar.classList.toggle("collapsed");
+}
+
+function navigateToPage(pageName) {
+  const targetName = pageName === "dashboard" ? "analisis" : pageName;
+  const targetPage = document.getElementById(`page-${targetName}`);
+  if (!targetPage) return;
+
+  document.querySelectorAll(".app-page-view").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".sidebar-nav-btn").forEach(b => b.classList.remove("active"));
+
+  targetPage.classList.add("active");
+  const targetNav = document.getElementById(`nav-${targetName}`);
+  if (targetNav) targetNav.classList.add("active");
+
+  if (window.location.hash !== `#${targetName}`) {
+    history.replaceState(null, null, `#${targetName}`);
+  }
+}
+
+function bindEvents() {
+  const sidebarToggle = document.getElementById("btn-sidebar-toggle");
+  if (sidebarToggle) sidebarToggle.addEventListener("click", toggleSidebarMenu);
+
+  document.querySelectorAll(".sidebar-nav-btn[data-page]").forEach(btn => {
+    btn.addEventListener("click", () => navigateToPage(btn.dataset.page));
+  });
+
+  document.querySelectorAll(".btn-sample[data-preset]").forEach(btn => {
+    btn.addEventListener("click", () => loadPreset(Number(btn.dataset.preset)));
+  });
+
+  const bindClick = (id, fn) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("click", fn);
+  };
+
+  bindClick("btn-analyze", analyzeContent);
+  bindClick("btn-copy-report", copyTacticalReport);
+  bindClick("btn-download-txt", () => downloadReport("txt"));
+  bindClick("btn-download-json", () => downloadReport("json"));
+  bindClick("btn-batch-analyze", analyzeBatchContent);
+  bindClick("btn-toggle-add-kb", toggleAddFactCheckForm);
+  bindClick("btn-cancel-add-kb", toggleAddFactCheckForm);
+  bindClick("btn-clear-history", clearHistory);
+
+  const batchFile = document.getElementById("batch-file");
+  if (batchFile) batchFile.addEventListener("change", handleBatchFileUpload);
+
+  const kbForm = document.getElementById("kb-add-form");
+  if (kbForm) kbForm.addEventListener("submit", submitNewFactCheck);
+
+  const kbSearch = document.getElementById("kb-search");
+  if (kbSearch) kbSearch.addEventListener("input", filterKnowledgeBase);
+
+  const kbCat = document.getElementById("kb-filter-category");
+  if (kbCat) kbCat.addEventListener("change", filterKnowledgeBase);
+
+  const kbVerdict = document.getElementById("kb-filter-verdict");
+  if (kbVerdict) kbVerdict.addEventListener("change", filterKnowledgeBase);
+
+  const historyList = document.getElementById("history-list");
+  if (historyList) {
+    historyList.addEventListener("click", (event) => {
+      const itemEl = event.target.closest(".history-item[data-history-index]");
+      if (!itemEl) return;
+      loadHistoryItem(Number(itemEl.dataset.historyIndex));
+    });
+  }
+
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash.replace("#", "") || "analisis";
+    navigateToPage(hash);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  bindEvents();
+  const initialHash = window.location.hash.replace("#", "") || "analisis";
+  navigateToPage(initialHash);
   loadKnowledgeBase();
   renderHistory();
 });

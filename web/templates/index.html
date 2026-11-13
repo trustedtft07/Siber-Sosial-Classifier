@@ -3,528 +3,322 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Siber Sosial &bull; Sistem Verifikasi Disinformasi</title>
-  <!-- Google Fonts: Inter -->
+  <title>Siber Sosial - Verifikasi Konten</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/style.css?v={{ asset_version }}">
 </head>
 <body>
   <div class="app-shell">
 
-    <!-- TOP BAR (Sesuai Mockup Gambar: Oranye Karang, Hamburger, SIBER SOSIAL, Badge KARTIKA HACKATON) -->
     <header class="app-topbar">
       <div class="topbar-left">
-        <button type="button" class="btn-hamburger" onclick="toggleSidebarMenu()" title="Toggle Menu Navigasi">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <button type="button" id="btn-sidebar-toggle" class="btn-hamburger" aria-label="Buka atau tutup navigasi">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
-        <span class="topbar-title">SIBER SOSIAL</span>
-        <span class="topbar-badge">KARTIKA HACKATON</span>
+        <span class="topbar-title">Siber Sosial</span>
       </div>
     </header>
 
-    <!-- WRAPPER BODY: SIDEBAR + MAIN PAGE CONTENT -->
     <div class="app-body">
-
-      <!-- SIDEBAR NAVIGASI KIRI DENGAN FITUR PINDAH HALAMAN -->
       <aside class="app-sidebar" id="app-sidebar">
-        <div class="sidebar-inner">
-          <div class="sidebar-menu-label">MENU NAVIGASI</div>
-          
-          <nav class="sidebar-nav">
-            <button type="button" id="nav-dashboard" class="sidebar-nav-btn active" onclick="navigateToPage('dashboard')">
-              <span class="nav-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <rect x="3" y="3" width="7" height="7" rx="1"></rect>
-                  <rect x="14" y="3" width="7" height="7" rx="1"></rect>
-                  <rect x="14" y="14" width="7" height="7" rx="1"></rect>
-                  <rect x="3" y="14" width="7" height="7" rx="1"></rect>
-                </svg>
-              </span>
-              <span class="nav-text">Dashboard Utama</span>
-            </button>
+        <nav class="sidebar-nav" aria-label="Navigasi utama">
+          <button type="button" id="nav-analisis" class="sidebar-nav-btn active" data-page="analisis">
+            <span class="nav-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <span class="nav-text">Pemeriksaan</span>
+          </button>
 
-            <button type="button" id="nav-analisis" class="sidebar-nav-btn" onclick="navigateToPage('analisis')">
-              <span class="nav-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="16" y1="13" x2="8" y2="13"></line>
-                  <line x1="16" y1="17" x2="8" y2="17"></line>
-                </svg>
-              </span>
-              <span class="nav-text">Analisis Narasi</span>
-            </button>
+          <button type="button" id="nav-batch" class="sidebar-nav-btn" data-page="batch">
+            <span class="nav-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </span>
+            <span class="nav-text">Pemindaian Massal</span>
+          </button>
 
-            <button type="button" id="nav-batch" class="sidebar-nav-btn" onclick="navigateToPage('batch')">
-              <span class="nav-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                </svg>
-              </span>
-              <span class="nav-text">Pemindaian Massal</span>
-            </button>
+          <button type="button" id="nav-database" class="sidebar-nav-btn" data-page="database">
+            <span class="nav-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </span>
+            <span class="nav-text">Arsip Fakta</span>
+          </button>
 
-            <button type="button" id="nav-database" class="sidebar-nav-btn" onclick="navigateToPage('database')">
-              <span class="nav-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                </svg>
-              </span>
-              <span class="nav-text">Pangkalan Data (RAG)</span>
-            </button>
-
-            <button type="button" id="nav-riwayat" class="sidebar-nav-btn" onclick="navigateToPage('riwayat')">
-              <span class="nav-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-              </span>
-              <span class="nav-text">Riwayat Pemindaian</span>
-            </button>
-          </nav>
-
-          <div class="sidebar-footer-info">
-            <strong>Kategori 04</strong>
-            <span>Cognitive Domain Defense</span>
-          </div>
-        </div>
+          <button type="button" id="nav-riwayat" class="sidebar-nav-btn" data-page="riwayat">
+            <span class="nav-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </span>
+            <span class="nav-text">Riwayat</span>
+          </button>
+        </nav>
       </aside>
 
-      <!-- KONTEN UTAMA: BERGANTI SESUAI TAB YANG DIKLIK -->
       <main class="app-main-content">
 
-        <!-- ================================================================= -->
-        <!-- HALAMAN 1: DASHBOARD UTAMA (PERSIS SEPERTI GAMBAR MOCKUP USER)     -->
-        <!-- ================================================================= -->
-        <section id="page-dashboard" class="app-page-view active">
-          
-          <!-- Banner Atas: Shield Icon + SISTEM VERIFIKASI DISINFORMASI -->
-          <div class="mockup-banner-card">
-            <div class="shield-icon-wrap">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <div class="banner-text-block">
-              <h1 class="mockup-banner-title">SISTEM VERIFIKASI DISINFORMASI</h1>
-              <span class="banner-subtitle">Tiga-Layer Cognitive Defense Engine &bull; PUSSIBERAD TNI AD</span>
-            </div>
-          </div>
-
-          <!-- Deretan 4 Kartu Metrik (2x2 Grid Persis Seperti Mockup Gambar) -->
-          <div class="mockup-metrics-grid">
-            
-            <!-- Card 1: HOAX RISK SCORE -->
-            <div class="mockup-stat-card">
-              <div class="stat-card-top-row">
-                <div class="stat-number-wrap">
-                  <span id="val-score" class="stat-big-number">00</span>
-                  <span class="stat-scale-text">/100</span>
-                </div>
-                <div class="stat-warning-icon" title="Indikator Tingkat Risiko">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                    <line x1="12" y1="9" x2="12" y2="13"></line>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                  </svg>
-                </div>
-              </div>
-              <h2 class="stat-card-label">HOAX RISK SCORE</h2>
-              
-              <!-- Progress Bar Baris Tebal (Subtask 3.1) -->
-              <div class="stat-bar-track">
-                <div id="bar-overall" class="stat-bar-fill" style="width: 0%;"></div>
-              </div>
-
-              <div class="stat-card-footer">
-                <span id="val-classification" class="badge-status-pill badge-neutral">MENUNGGU INPUT</span>
-                <span id="val-domain" class="stat-domain-text">-</span>
-              </div>
-            </div>
-
-            <!-- Card 2: GAYA BAHASA & LEKSIKON PROVOKASI -->
-            <div class="mockup-stat-card">
-              <div class="stat-card-top-row">
-                <div class="stat-number-wrap">
-                  <span id="sub-linguistic" class="stat-big-number">00%</span>
-                </div>
-              </div>
-              <h2 class="stat-card-label">GAYA BAHASA & LEKSIKON PROVOKASI</h2>
-              
-              <div class="stat-bar-track">
-                <div id="bar-linguistic" class="stat-bar-fill" style="width: 0%;"></div>
-              </div>
-
-              <p class="stat-card-caption">Mendeteksi huruf kapital, seruan, dan urgensi palsu</p>
-            </div>
-
-            <!-- Card 3: PENCOCOKAN BUKTI DAN FAKTA -->
-            <div class="mockup-stat-card">
-              <div class="stat-card-top-row">
-                <div class="stat-number-wrap">
-                  <span id="sub-evidence" class="stat-big-number">00%</span>
-                </div>
-              </div>
-              <h2 class="stat-card-label">PENCOCOKAN BUKTI DAN FAKTA</h2>
-              
-              <div class="stat-bar-track">
-                <div id="bar-evidence" class="stat-bar-fill" style="width: 0%;"></div>
-              </div>
-
-              <p class="stat-card-caption">Pencocokan semantik TF-IDF RAG arsip resmi klarifikasi</p>
-            </div>
-
-            <!-- Card 4: REPUTASI SUMBER & DOMAIN -->
-            <div class="mockup-stat-card">
-              <div class="stat-card-top-row">
-                <div class="stat-number-wrap">
-                  <span id="sub-source" class="stat-big-number">00%</span>
-                </div>
-              </div>
-              <h2 class="stat-card-label">REPUTASI SUMBER & DOMAIN</h2>
-              
-              <div class="stat-bar-track">
-                <div id="bar-source" class="stat-bar-fill" style="width: 0%;"></div>
-              </div>
-
-              <p class="stat-card-caption">Verifikasi Tier domain & pola sebaran WA</p>
-            </div>
-
-          </div>
-
-          <!-- Quick Action Card di Dashboard untuk Memulai -->
-          <div class="dashboard-quick-action-card">
-            <div class="quick-action-left">
-              <h3>Mulai Analisis Disinformasi Siber Sosial</h3>
-              <p>Pilih sampel skenario uji cepat atau masukkan narasi Anda di halaman analisis narasi.</p>
-              
-              <div class="quick-preset-btns">
-                <button type="button" class="btn-preset-simple" onclick="loadPreset(1); navigateToPage('analisis');">
-                  🚀 Uji Cepat: Hoax Bintara
-                </button>
-                <button type="button" class="btn-preset-simple" onclick="loadPreset(2); navigateToPage('analisis');">
-                  🚀 Uji Cepat: Isu Kudeta
-                </button>
-                <button type="button" class="btn-preset-simple" onclick="loadPreset(3); navigateToPage('analisis');">
-                  🚀 Uji Cepat: Berita Valid
-                </button>
-              </div>
-            </div>
-            <div class="quick-action-right">
-              <button type="button" class="btn-coral-primary btn-large" onclick="navigateToPage('analisis')">
-                Buka Lembar Analisis Narasi &rarr;
-              </button>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- ================================================================= -->
-        <!-- HALAMAN 2: ANALISIS NARASI (Dedicated Page)                       -->
-        <!-- ================================================================= -->
-        <section id="page-analisis" class="app-page-view">
-          
+        <section id="page-analisis" class="app-page-view active">
           <div class="page-header-row">
-            <div>
-              <h2 class="page-heading">Analisis Narasi & Verifikasi Isu</h2>
-              <p class="page-subheading">Memproses input teks berantai dan tautan sumber melalui Three-Layer Hybrid Analysis</p>
-            </div>
+            <h1 class="page-heading">Pemeriksaan Konten</h1>
             <div class="page-header-actions">
-              <button type="button" id="btn-copy-report" class="btn-action-outline" onclick="copyTacticalReport()">
-                📋 Salin Laporan Intelijen
-              </button>
-              <button type="button" id="btn-download-txt" class="btn-action-outline" onclick="downloadReport('txt')">
-                💾 Unduh TXT
-              </button>
-              <button type="button" id="btn-download-json" class="btn-action-outline" onclick="downloadReport('json')">
-                { } JSON
-              </button>
+              <button type="button" id="btn-copy-report" class="btn-outline">Salin Laporan</button>
+              <button type="button" id="btn-download-txt" class="btn-outline">Unduh TXT</button>
+              <button type="button" id="btn-download-json" class="btn-outline">Unduh JSON</button>
             </div>
           </div>
 
-          <div class="two-column-layout">
-            
-            <!-- Kolom Input -->
-            <div class="card-clean">
-              <div class="card-clean-header">
-                <h3>FORM INPUT NARASI</h3>
+          <div class="workspace-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <h2>Input</h2>
               </div>
-              <div class="card-clean-body">
-                
-                <div class="form-group-modern">
-                  <label>Pilih Sampel Skenario Cepat:</label>
-                  <div class="scenario-buttons-row">
-                    <button type="button" class="btn-scenario-chip" onclick="loadPreset(1)">
-                      Hoax Bintara Berbayar
-                    </button>
-                    <button type="button" class="btn-scenario-chip" onclick="loadPreset(2)">
-                      Isu Kudeta Militer
-                    </button>
-                    <button type="button" class="btn-scenario-chip" onclick="loadPreset(3)">
-                      Satgas Bencana (Valid)
-                    </button>
-                  </div>
+              <div class="panel-body">
+                <div class="sample-strip">
+                  <span class="sample-label">Sampel:</span>
+                  <button type="button" class="btn-sample" data-preset="1">Penipuan Rekrutmen</button>
+                  <button type="button" class="btn-sample" data-preset="2">Rumor Darurat</button>
+                  <button type="button" class="btn-sample" data-preset="3">Klarifikasi Bencana</button>
                 </div>
 
-                <div class="form-group-modern">
-                  <label for="input-text">Teks Narasi / Pesan Berantai (Opsional jika URL diisi):</label>
-                  <textarea id="input-text" class="input-modern-textarea" rows="6" placeholder="Tempelkan pesan atau postingan teks yang ingin diverifikasi di sini..."></textarea>
+                <div class="form-field">
+                  <label for="input-text">Teks atau Pesan</label>
+                  <textarea id="input-text" class="field-textarea" rows="8" maxlength="15000" placeholder="Tempel pesan atau postingan yang ingin diperiksa..."></textarea>
                 </div>
 
-                <div class="form-group-modern">
-                  <label for="input-url">Tautan Berita / Sumber URL (Auto-Scrape jika teks kosong):</label>
-                  <input type="text" id="input-url" class="input-modern-text" placeholder="https://domain-berita.com/artikel-terkait">
+                <div class="form-field">
+                  <label for="input-url">Tautan Sumber (Opsional)</label>
+                  <input type="text" id="input-url" class="field-input field-mono" maxlength="2048" placeholder="https://contoh-situs.com/artikel">
                 </div>
 
-                <button type="button" id="btn-analyze" class="btn-coral-primary btn-block" onclick="analyzeContent()">
-                  ANALISIS NARASI KOGNITIF
-                </button>
+                <button type="button" id="btn-analyze" class="btn-primary btn-block">Periksa Konten</button>
               </div>
             </div>
 
-            <!-- Kolom Rincian Hasil & XAI -->
-            <div class="card-clean">
-              <div class="card-clean-header">
-                <h3>RINCIAN VERIFIKASI TIGA LAPISAN</h3>
-                <span id="val-action" class="action-code-badge">-</span>
+            <div class="panel">
+              <div class="panel-header">
+                <h2>Hasil Pemeriksaan</h2>
+                <span id="val-action" class="action-code">-</span>
               </div>
-              <div class="card-clean-body">
-                
-                <!-- Layer 1 Box -->
-                <div class="layer-detail-box">
-                  <div class="layer-title-bar">
-                    <span class="layer-number-badge">Layer 1</span>
-                    <strong>Analisis Gaya Bahasa & Leksikon</strong>
+              <div class="panel-body">
+
+                <div class="verdict-block">
+                  <div class="verdict-top">
+                    <div class="score-readout">
+                      <span id="val-score" class="score-value">--</span>
+                      <span class="score-max">/100</span>
+                    </div>
+                    <div class="verdict-tags">
+                      <span id="val-classification" class="badge badge-neutral">Belum diperiksa</span>
+                      <span id="val-domain" class="domain-label">-</span>
+                    </div>
                   </div>
-                  <div id="box-linguistic" class="layer-content">
-                    Belum ada narasi dianalisis.
+                  <div class="progress-track">
+                    <div id="bar-overall" class="progress-fill" style="width: 0%;"></div>
                   </div>
                 </div>
 
-                <!-- Layer 2 Box -->
-                <div class="layer-detail-box">
-                  <div class="layer-title-bar">
-                    <span class="layer-number-badge">Layer 2</span>
-                    <strong>Pencocokan Bukti Fakta (RAG Arsip)</strong>
+                <div class="layers-stack">
+                  <div class="layer-item">
+                    <div class="layer-head">
+                      <span class="layer-name">Linguistik</span>
+                      <span id="sub-linguistic" class="layer-score">--</span>
+                    </div>
+                    <div class="progress-track progress-slim">
+                      <div id="bar-linguistic" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div id="box-linguistic" class="layer-detail">Menunggu input.</div>
                   </div>
-                  <div id="box-evidence" class="layer-content">
-                    Belum ada narasi dianalisis.
+
+                  <div class="layer-item">
+                    <div class="layer-head">
+                      <span class="layer-name">Pencocokan Fakta</span>
+                      <span id="sub-evidence" class="layer-score">--</span>
+                    </div>
+                    <div class="progress-track progress-slim">
+                      <div id="bar-evidence" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div id="box-evidence" class="layer-detail">Menunggu input.</div>
+                  </div>
+
+                  <div class="layer-item">
+                    <div class="layer-head">
+                      <span class="layer-name">Sumber &amp; Tautan</span>
+                      <span id="sub-source" class="layer-score">--</span>
+                    </div>
+                    <div class="progress-track progress-slim">
+                      <div id="bar-source" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <div id="box-source" class="layer-detail">Menunggu input.</div>
                   </div>
                 </div>
 
-                <!-- Layer 3 Box -->
-                <div class="layer-detail-box">
-                  <div class="layer-title-bar">
-                    <span class="layer-number-badge">Layer 3</span>
-                    <strong>Reputasi Sumber & Pola Sebaran</strong>
-                  </div>
-                  <div id="box-source" class="layer-content">
-                    Belum ada narasi dianalisis.
-                  </div>
-                </div>
+                <div class="summary-section">
+                  <h3>Ringkasan</h3>
+                  <p id="box-brief" class="summary-brief">Masukkan teks atau tautan lalu jalankan pemeriksaan.</p>
 
-                <!-- XAI & Rekomendasi Box -->
-                <div class="xai-summary-card">
-                  <h4>Ringkasan Intelijen Taktis (Explainable AI):</h4>
-                  <p id="box-brief" class="xai-brief-text">
-                    Ringkasan analisis akan muncul di sini setelah pemrosesan narasi selesai.
-                  </p>
-                  
-                  <div class="xai-factors-title">FAKTOR RISIKO UTAMA:</div>
-                  <ul id="list-factors" class="xai-factors-list">
-                    <li>Menunggu input narasi.</li>
+                  <h4>Faktor Penentu</h4>
+                  <ul id="list-factors" class="factors-list">
+                    <li>Belum ada temuan.</li>
                   </ul>
 
-                  <div class="recommendation-pill-box">
-                    <strong>Rekomendasi Satuan:</strong>
-                    <div id="box-recommendation">Sistem siap menerima input narasi.</div>
-                  </div>
+                  <div id="box-recommendation" class="recommendation-box">-</div>
                 </div>
 
               </div>
             </div>
-
           </div>
-
         </section>
 
-        <!-- ================================================================= -->
-        <!-- HALAMAN 3: PEMINDAIAN MASSAL / BATCH SCANNER (Dedicated Page)     -->
-        <!-- ================================================================= -->
         <section id="page-batch" class="app-page-view">
-          
           <div class="page-header-row">
-            <div>
-              <h2 class="page-heading">Pemindaian Massal (Batch Scanner)</h2>
-              <p class="page-subheading">Pindai puluhan pesan berantai sekaligus dalam satu kali pemrosesan (Subtask 3.4)</p>
-            </div>
+            <h1 class="page-heading">Pemindaian Massal</h1>
           </div>
 
-          <div class="card-clean">
-            <div class="card-clean-body">
-              <div class="info-alert-box">
-                <strong>Petunjuk:</strong> Tempelkan teks narasi (pisahkan tiap pesan dengan baris kosong ganda) atau unggah berkas <code>.txt</code> / <code>.csv</code>.
+          <div class="panel">
+            <div class="panel-body">
+              <div class="form-field">
+                <label for="batch-text">Daftar Narasi atau Tautan (pisahkan tiap entri dengan baris kosong)</label>
+                <textarea id="batch-text" class="field-textarea" rows="7" placeholder="Tempel beberapa narasi atau URL di sini, pisahkan tiap entri dengan satu baris kosong."></textarea>
               </div>
 
-              <div class="form-group-modern">
-                <label for="batch-text">Multi-Narasi Input:</label>
-                <textarea id="batch-text" class="input-modern-textarea" rows="7" placeholder="Narasi 1: Beredar info rekrutmen berbayar...&#10;&#10;Narasi 2: Dikabarkan konvoi kendaraan taktis bergerak...&#10;&#10;Narasi 3: Satgas bantuan TNI AD berangkat membantu penanganan erupsi..."></textarea>
+              <div class="batch-toolbar">
+                <div class="form-field" style="margin-bottom: 0;">
+                  <label for="batch-file">Atau unggah berkas (.txt / .csv, maks. 512 KB)</label>
+                  <input type="file" id="batch-file" class="field-file" accept=".txt,.csv">
+                </div>
+                <button type="button" id="btn-batch-analyze" class="btn-primary">Jalankan Pemindaian</button>
               </div>
 
-              <div class="form-group-modern">
-                <label for="batch-file">Unggah Berkas (.txt / .csv):</label>
-                <input type="file" id="batch-file" class="input-file-modern" accept=".txt,.csv" onchange="handleBatchFileUpload(event)">
-              </div>
-
-              <button type="button" id="btn-batch-analyze" class="btn-coral-primary" onclick="analyzeBatchContent()">
-                JALANKAN PEMINDAIAN MASSAL
-              </button>
-
-              <!-- Hasil Pemindaian Batch -->
-              <div id="batch-results-container" class="batch-output-section" style="display: none; margin-top: 1.5rem;">
-                <div class="batch-output-header">
-                  <h3>HASIL PEMINDAIAN MASSAL</h3>
-                  <span id="batch-count-badge" class="topbar-badge" style="color: #ff7654; background: #ffe4dd;">0 Selesai</span>
+              <div id="batch-results-container" class="batch-results" style="display: none;">
+                <div class="section-subhead">
+                  <h2>Hasil Pemindaian</h2>
+                  <span id="batch-count-badge" class="badge badge-neutral">0 selesai</span>
                 </div>
 
                 <div class="table-responsive">
-                  <table class="modern-table">
+                  <table class="data-table">
                     <thead>
                       <tr>
-                        <th style="width: 40px;">#</th>
-                        <th>Pratinjau Narasi</th>
-                        <th style="width: 90px;">Skor</th>
-                        <th style="width: 140px;">Klasifikasi</th>
-                        <th style="width: 130px;">Aksi Rekomendasi</th>
+                        <th width="50">No</th>
+                        <th>Cuplikan</th>
+                        <th width="95">Skor</th>
+                        <th width="210">Klasifikasi</th>
+                        <th width="170">Tindakan</th>
                       </tr>
                     </thead>
-                    <tbody id="batch-tbody">
-                      <!-- Diisi oleh JavaScript -->
-                    </tbody>
+                    <tbody id="batch-tbody"></tbody>
                   </table>
                 </div>
               </div>
-
             </div>
           </div>
-
         </section>
 
-        <!-- ================================================================= -->
-        <!-- HALAMAN 4: PANGKALAN DATA RAG (Dedicated Page)                    -->
-        <!-- ================================================================= -->
         <section id="page-database" class="app-page-view">
-          
           <div class="page-header-row">
-            <div>
-              <h2 class="page-heading">Pangkalan Data Verifikasi Resmi (RAG)</h2>
-              <p class="page-subheading">Koleksi arsip klarifikasi & debunking resmi untuk pencocokan semantik Layer 2</p>
-            </div>
-            <div class="page-header-actions">
-              <button type="button" id="btn-toggle-add-kb" class="btn-coral-primary" onclick="toggleAddFactCheckForm()">
-                + Tambah Arsip Baru
-              </button>
-            </div>
+            <h1 class="page-heading">Arsip Fakta</h1>
+            <button type="button" id="btn-toggle-add-kb" class="btn-primary">Tambah Entri</button>
           </div>
 
-          <!-- Form Tambah Klarifikasi (Collapsible) -->
-          <div id="form-add-kb" class="card-clean form-collapsible-box" style="display: none; margin-bottom: 1.5rem;">
-            <div class="card-clean-header">
-              <h3>REGISTRASI ARSIP KLARIFIKASI BARU</h3>
+          <div id="form-add-kb" class="panel form-collapsible" style="display: none;">
+            <div class="panel-header">
+              <h2>Tambah Entri Baru</h2>
             </div>
-            <div class="card-clean-body">
-              <form onsubmit="submitNewFactCheck(event)">
-                <div class="form-row-grid">
-                  <div class="form-group-modern">
-                    <label for="fc-id">ID Klarifikasi (Opsional, otomatis jika kosong):</label>
-                    <input type="text" id="fc-id" class="input-modern-text" placeholder="FC-DEF-010">
+            <div class="panel-body">
+              <form id="kb-add-form">
+                <div class="form-grid-2">
+                  <div class="form-field">
+                    <label for="fc-id">ID Entri</label>
+                    <input type="text" id="fc-id" class="field-input field-mono" maxlength="40" pattern="[A-Za-z0-9_-]{3,40}" placeholder="FC-041">
                   </div>
-                  <div class="form-group-modern">
-                    <label for="fc-agency">Instansi Sumber:</label>
-                    <input type="text" id="fc-agency" class="input-modern-text" placeholder="Dispenad TNI AD / PUSSIBERAD" required>
+                  <div class="form-field">
+                    <label for="fc-agency">Sumber / Lembaga</label>
+                    <input type="text" id="fc-agency" class="field-input" maxlength="120" placeholder="Komdigi / Lembaga Resmi" required>
                   </div>
                 </div>
 
-                <div class="form-row-grid">
-                  <div class="form-group-modern">
-                    <label for="fc-category">Kategori Ancaman:</label>
-                    <select id="fc-category" class="input-modern-select" required>
+                <div class="form-grid-2">
+                  <div class="form-field">
+                    <label for="fc-category">Kategori</label>
+                    <select id="fc-category" class="field-select" required>
                       <option value="Disinformasi Pertahanan">Disinformasi Pertahanan</option>
-                      <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA & Ketertiban</option>
-                      <option value="Manipulasi Kebijakan Publik">Manipulasi Kebijakan Publik</option>
-                      <option value="Penipuan Siber & Scam">Penipuan Siber & Scam</option>
-                      <option value="Operasi Bantuan Kemanusiaan">Operasi Bantuan Kemanusiaan</option>
-                      <option value="Rekrutmen & Informasi Resmi">Rekrutmen & Informasi Resmi</option>
-                      <option value="Propaganda & Separatisme">Propaganda & Separatisme</option>
+                      <option value="Rekrutmen & Penipuan">Rekrutmen &amp; Penipuan</option>
+                      <option value="Penipuan Siber & Scam">Penipuan Siber &amp; Scam</option>
+                      <option value="Hoaks Kesejahteraan">Hoaks Kesejahteraan</option>
+                      <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA &amp; Ketertiban</option>
+                      <option value="Informasi Publik">Informasi Publik</option>
+                      <option value="Operasi Kemanusiaan & Bencana">Operasi Kemanusiaan &amp; Bencana</option>
                     </select>
                   </div>
-                  <div class="form-group-modern">
-                    <label for="fc-verdict">Status Vonis:</label>
-                    <select id="fc-verdict" class="input-modern-select" required>
-                      <option value="SALAH">SALAH (Hoax Total)</option>
-                      <option value="MISLEADING">MISLEADING (Menyesatkan Sebagian)</option>
-                      <option value="BENAR">BENAR (Fakta Sahih)</option>
+                  <div class="form-field">
+                    <label for="fc-verdict">Status Verifikasi</label>
+                    <select id="fc-verdict" class="field-select" required>
+                      <option value="SALAH">SALAH</option>
+                      <option value="MISLEADING">MISLEADING</option>
+                      <option value="BENAR">BENAR</option>
                     </select>
                   </div>
                 </div>
 
-                <div class="form-group-modern">
-                  <label for="fc-claim">Klaim Hoaks yang Beredar:</label>
-                  <textarea id="fc-claim" class="input-modern-textarea" rows="2" placeholder="Tuliskan narasi klaim yang dibantah..." required></textarea>
+                <div class="form-field">
+                  <label for="fc-claim">Klaim Beredar</label>
+                  <textarea id="fc-claim" class="field-textarea" rows="2" maxlength="1000" placeholder="Tuliskan klaim yang beredar..." required></textarea>
                 </div>
 
-                <div class="form-group-modern">
-                  <label for="fc-fact">Fakta Resmi / Klarifikasi:</label>
-                  <textarea id="fc-fact" class="input-modern-textarea" rows="2" placeholder="Tuliskan fakta yang sebenarnya dari instansi berwenang..." required></textarea>
+                <div class="form-field">
+                  <label for="fc-fact">Fakta Klarifikasi</label>
+                  <textarea id="fc-fact" class="field-textarea" rows="2" maxlength="2000" placeholder="Tuliskan fakta atau klarifikasi resmi..." required></textarea>
                 </div>
 
-                <div class="form-group-modern">
-                  <label for="fc-url">URL Bukti / Siaran Pers Resmi:</label>
-                  <input type="url" id="fc-url" class="input-modern-text" placeholder="https://tniad.mil.id/berita-resmi" required>
+                <div class="form-field">
+                  <label for="fc-url">Tautan Rujukan</label>
+                  <input type="url" id="fc-url" class="field-input field-mono" maxlength="1024" placeholder="https://sumber-resmi.go.id/klarifikasi" required>
                 </div>
 
-                <div class="form-actions-row">
-                  <button type="submit" id="btn-save-fc" class="btn-coral-primary">
-                    SIMPAN KE DATABASE
-                  </button>
-                  <button type="button" class="btn-action-outline" onclick="toggleAddFactCheckForm()">
-                    BATAL
-                  </button>
+                <div class="form-actions">
+                  <button type="submit" id="btn-save-fc" class="btn-primary">Simpan</button>
+                  <button type="button" id="btn-cancel-add-kb" class="btn-outline">Batal</button>
                 </div>
               </form>
             </div>
           </div>
 
-          <!-- Filter & Tabel Data -->
-          <div class="card-clean">
-            <div class="card-clean-body">
-              
-              <div class="table-filter-toolbar">
-                <div class="search-box-wrap">
-                  <input type="text" id="kb-search" class="input-modern-text" placeholder="🔍 Cari klaim, instansi, atau ID arsip..." oninput="filterKnowledgeBase()">
+          <div class="panel">
+            <div class="panel-body">
+              <div class="table-toolbar">
+                <div class="search-wrap">
+                  <input type="text" id="kb-search" class="field-input" placeholder="Cari klaim, sumber, atau ID...">
                 </div>
-                
-                <div class="filter-dropdowns-wrap">
-                  <select id="kb-filter-category" class="input-modern-select" onchange="filterKnowledgeBase()">
+                <div class="filter-group">
+                  <select id="kb-filter-category" class="field-select">
                     <option value="">Semua Kategori</option>
                     <option value="Disinformasi Pertahanan">Disinformasi Pertahanan</option>
-                    <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA & Ketertiban</option>
-                    <option value="Manipulasi Kebijakan Publik">Manipulasi Kebijakan Publik</option>
-                    <option value="Penipuan Siber & Scam">Penipuan Siber & Scam</option>
-                    <option value="Operasi Bantuan Kemanusiaan">Operasi Bantuan Kemanusiaan</option>
-                    <option value="Rekrutmen & Informasi Resmi">Rekrutmen & Informasi Resmi</option>
-                    <option value="Propaganda & Separatisme">Propaganda & Separatisme</option>
+                    <option value="Rekrutmen & Penipuan">Rekrutmen &amp; Penipuan</option>
+                    <option value="Penipuan Siber & Scam">Penipuan Siber &amp; Scam</option>
+                    <option value="Hoaks Kesejahteraan">Hoaks Kesejahteraan</option>
+                    <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA &amp; Ketertiban</option>
+                    <option value="Informasi Publik">Informasi Publik</option>
+                    <option value="Operasi Kemanusiaan & Bencana">Operasi Kemanusiaan &amp; Bencana</option>
                   </select>
-
-                  <select id="kb-filter-verdict" class="input-modern-select" onchange="filterKnowledgeBase()">
+                  <select id="kb-filter-verdict" class="field-select">
                     <option value="">Semua Status</option>
                     <option value="SALAH">SALAH</option>
                     <option value="MISLEADING">MISLEADING</option>
@@ -533,118 +327,52 @@
                 </div>
               </div>
 
-              <div class="kb-counter-text">
-                <span id="kb-counter">Memuat data pangkalan fakta...</span>
+              <div class="kb-counter-row">
+                <span id="kb-counter">Memuat arsip...</span>
               </div>
 
               <div class="table-responsive">
-                <table class="modern-table">
+                <table class="data-table">
                   <thead>
                     <tr>
-                      <th style="width: 120px;">ID ARSIP</th>
-                      <th style="width: 170px;">KATEGORI</th>
-                      <th>KLAIM & FAKTA RESMI</th>
-                      <th style="width: 110px;">STATUS</th>
-                      <th style="width: 160px;">SUMBER RESMI</th>
+                      <th width="95">ID</th>
+                      <th width="165">Kategori</th>
+                      <th>Klaim &amp; Klarifikasi</th>
+                      <th width="105">Status</th>
+                      <th width="145">Sumber</th>
                     </tr>
                   </thead>
                   <tbody id="kb-tbody">
-                    <tr><td colspan="5" style="text-align: center; color: #9ca3af; padding: 2rem;">Memuat pangkalan fakta resmi...</td></tr>
+                    <tr><td colspan="5" class="table-empty">Memuat data...</td></tr>
                   </tbody>
                 </table>
               </div>
-
             </div>
           </div>
-
         </section>
 
-        <!-- ================================================================= -->
-        <!-- HALAMAN 5: RIWAYAT PEMINDAIAN (Dedicated Page)                    -->
-        <!-- ================================================================= -->
         <section id="page-riwayat" class="app-page-view">
-          
           <div class="page-header-row">
-            <div>
-              <h2 class="page-heading">Riwayat Pemindaian Lokal</h2>
-              <p class="page-subheading">Catatan riwayat verifikasi narasi tersimpan di browser Anda (LocalStorage)</p>
-            </div>
-            <div class="page-header-actions">
-              <button type="button" class="btn-action-danger" onclick="clearHistory()">
-                Hapus Seluruh Riwayat
-              </button>
-            </div>
+            <h1 class="page-heading">Riwayat Pemeriksaan</h1>
+            <button type="button" id="btn-clear-history" class="btn-danger-outline">Hapus Semua</button>
           </div>
 
-          <div class="card-clean">
-            <div class="card-clean-body">
-              <div id="history-empty" class="history-empty-notice">
-                Belum ada riwayat pemindaian tersimpan pada sesi ini.
+          <div class="panel">
+            <div class="panel-body">
+              <div id="history-empty" class="empty-state">
+                Belum ada riwayat pemeriksaan.
               </div>
-              <ul id="history-list" class="history-card-list">
-                <!-- Dirender otomatis oleh app.js -->
-              </ul>
+              <ul id="history-list" class="history-list"></ul>
             </div>
           </div>
-
         </section>
 
       </main>
-
     </div>
+
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
   </div>
 
-  <!-- Toast Notification Container -->
-  <div id="toast-container" class="toast-container"></div>
-
-  <!-- Script Controller -->
   <script src="/static/js/app.js?v={{ asset_version }}"></script>
-  <script>
-    // FUNGSI GANTI HALAMAN DARI SIDEBAR MENU
-    function navigateToPage(pageName) {
-      // 1. Sembunyikan semua halaman
-      const allPages = document.querySelectorAll('.app-page-view');
-      allPages.forEach(page => page.classList.remove('active'));
-
-      // 2. Non-aktifkan semua tombol navigasi sidebar
-      const allNavBtns = document.querySelectorAll('.sidebar-nav-btn');
-      allNavBtns.forEach(btn => btn.classList.remove('active'));
-
-      // 3. Tampilkan halaman yang dipilih
-      const targetPage = document.getElementById('page-' + pageName);
-      if (targetPage) {
-        targetPage.classList.add('active');
-      }
-
-      // 4. Aktifkan tombol sidebar yang dipilih
-      const targetNav = document.getElementById('nav-' + pageName);
-      if (targetNav) {
-        targetNav.classList.add('active');
-      }
-
-      // 5. Update hash URL agar bookmark / history jalan
-      window.location.hash = pageName;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // TOGGLE SIDEBAR UNTUK TAMPILAN MOBILE / MINIMALIS
-    function toggleSidebarMenu() {
-      const sidebar = document.getElementById('app-sidebar');
-      if (sidebar) {
-        sidebar.classList.toggle('collapsed');
-      }
-    }
-
-    // CEK HASH SAAT HALAMAN DIBUKA
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '') || 'dashboard';
-      navigateToPage(hash);
-    });
-
-    window.addEventListener('hashchange', () => {
-      const hash = window.location.hash.replace('#', '') || 'dashboard';
-      navigateToPage(hash);
-    });
-  </script>
 </body>
 </html>

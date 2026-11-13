@@ -1,25 +1,24 @@
-# Sistem Klasifikasi Disinformasi Siber Sosial (Kategori 04: Cognitive Domain)
+# Siber Sosial - Verifikasi & Klasifikasi Konten
 
-Purwarupa platform verifikasi dan deteksi disinformasi siber sosial yang dirancang untuk mendukung tugas pertahanan kognitif PUSSIBERAD TNI AD dalam mengidentifikasi narasi provokatif, hoaks pertahanan, dan manipulasi opini publik secara cepat dan terukur.
+Aplikasi verifikasi dan klasifikasi disinformasi media sosial yang dikembangkan untuk Cyber Hackathon. Sistem memeriksa narasi teks maupun tautan rujukan guna mendeteksi indikasi hoaks, penipuan digital, dan manipulasi informasi publik.
 
 ---
 
 ## 1. Pendekatan Arsitektur
 
-Sistem menggunakan model verifikasi hibrida tiga lapis (Three-Layer Hybrid Verification) yang menggabungkan analisis linguistik teks, pencocokan bukti semantik (RAG), dan penilaian reputasi sumber:
+Sistem menggunakan alur verifikasi hibrida tiga lapis yang menggabungkan analisis gaya bahasa, pencocokan arsip fakta, dan pemeriksaan reputasi sumber:
 
-1. **Layer 1: Linguistic & Stylometric Analyzer (Bobot 30%)**
-   * Deteksi leksikon urgensi, pencatutan otoritas, konspirasi, dan polarisasi SARA.
-   * Analisis pola huruf kapital (*ALL CAPS*) dan tanda baca berlebih untuk mengukur derajat sensasionalisme.
-2. **Layer 2: Evidence Retrieval & Fact-Checking RAG (Bobot 45%)**
-   * Pencocokan semantik klaim terhadap basis pengetahuan verifikasi terindeks (arsip TurnBackHoax Mafindo, klarifikasi Kemenkomdigi, dan rilis resmi Dispenad/Puspen TNI).
-   * Menghitung derajat kemiripan klaim dengan arsip yang telah terverifikasi (*SALAH*, *MISLEADING*, atau *BENAR*).
-3. **Layer 3: Source & Propagation Verifier (Bobot 25%)**
-   * Evaluasi reputasi domain sumber (Tier 1: `.mil.id`/`.go.id`/media resmi, Tier 2: blog umum, Tier 3: domain berisiko/phishing).
-   * Deteksi anomali pola pesan berantai (*chain broadcast* tanpa atribusi sumber primer).
-4. **Explainable AI (XAI) & Taksonomi Ancaman**
-   * Sintesis faktor risiko poin demi poin dan klasifikasi domain ancaman (*Disinformasi Pertahanan*, *Polarisasi SARA*, *Penipuan Siber*, atau *Manipulasi Isu Publik*).
-   * Rekomendasi tindakan operasional untuk tim pemantau siber sosial.
+1. **Layer 1: Analisis Linguistik & Gaya Bahasa (Bobot 30%)**
+   * Normalisasi slang serta leetspeak, lalu mendeteksi kata pemicu urgensi, pencatutan otoritas, konspirasi, klaim anonim, dan polarisasi SARA.
+   * Mengukur rasio huruf kapital dan tanda baca berlebih untuk menilai indikasi sensasionalisme.
+2. **Layer 2: Pencocokan Arsip Fakta / RAG TF-IDF (Bobot 45%)**
+   * Pencocokan kemiripan hibrid (n-gram kata dan karakter dengan *cosine similarity*) terhadap basis data klarifikasi terindeks.
+   * Membandingkan klaim input dengan arsip rujukan yang telah diverifikasi (*SALAH*, *MISLEADING*, atau *BENAR*) beserta deteksi kontradiksi biaya/fakta.
+3. **Layer 3: Verifikasi Sumber & Tautan (Bobot 25%)**
+   * Evaluasi reputasi domain sumber (Tier 1: `.go.id`/`.mil.id`/media terverifikasi, Tier 2: situs eksternal umum, Tier 3: domain tiruan/*typosquatting* atau TLD berisiko).
+   * Deteksi pola pesan berantai (*forwarded broadcast*) tanpa sumber primer yang jelas.
+4. **Penjelas Hasil (XAI) & Ringkasan**
+   * Menyusun daftar faktor penentu skor, kategori isu, dan saran tindak lanjut, dengan opsi ringkasan dari Local LLM (Ollama).
 
 ---
 
@@ -28,32 +27,33 @@ Sistem menggunakan model verifikasi hibrida tiga lapis (Three-Layer Hybrid Verif
 ```
 siber-sosial-classifier/
 ├── core/
-│   ├── linguistic.py          # Analisis gaya bahasa dan leksikon provokasi
-│   ├── rag_engine.py          # Retrieval-Augmented Generation & semantic search
-│   ├── source_verifier.py     # Verifikasi domain dan heuristik pesan berantai
-│   ├── risk_scorer.py         # Perhitungan skor risiko komposit (0-100)
-│   └── xai_reasoner.py        # Sintesis penjelasan dan rekomendasi taktis
+│   ├── linguistic.py           # Analisis gaya bahasa dan leksikon provokasi
+│   ├── rag_engine.py           # Pencarian bukti fakta TF-IDF hibrid & cosine similarity
+│   ├── source_verifier.py      # Verifikasi domain, typosquatting, dan pesan berantai
+│   ├── url_scraper.py          # Ekstraksi konten URL berita dengan proteksi SSRF
+│   ├── risk_scorer.py          # Perhitungan skor risiko komposit (0-100)
+│   └── xai_reasoner.py         # Penyusunan faktor penentu, ringkasan, dan tindak lanjut
 ├── data/
-│   ├── fact_checks.json       # Pangkalan data arsip klarifikasi terverifikasi
-│   └── provocative_lexicon.json# Kamus leksikon pemicu kepanikan dan manipulasi
+│   ├── fact_checks.json        # Arsip klaim dan klarifikasi terverifikasi
+│   └── provocative_lexicon.json# Kamus frasa pemicu kepanikan dan manipulasi
 ├── web/
-│   ├── static/                # Aset CSS dan JS dashboard taktis
-│   └── templates/index.html   # Antarmuka web Cognitive Operations Center
-├── test_pipeline.py           # Skrip pengujian otomatis skenario kasus
-├── main.py                    # Entrypoint REST API FastAPI & server web
-├── Dockerfile                 # Konfigurasi container mandiri
-└── docker-compose.yml         # Konfigurasi deployment sekali jalan
+│   ├── static/                 # Aset CSS dan JS antarmuka web
+│   └── templates/index.html    # Antarmuka web Siber Sosial
+├── test_pipeline.py            # Skrip pengujian otomatis pipeline
+├── main.py                     # Entrypoint REST API FastAPI & server web
+├── Dockerfile                  # Konfigurasi container
+└── docker-compose.yml          # Konfigurasi deployment Docker
 ```
 
 ---
 
-## 3. Cara Menjalankan Aplikasi Secara Lokal
+## 3. Cara Menjalankan Secara Lokal
 
 ### Prasyarat
 * Python 3.11 atau lebih baru
-* Virtual environment (opsional namun disarankan)
+* Virtual environment (disarankan)
 
-### Langkah Instalasi
+### Langkah Menjalankan
 ```bash
 # 1. Masuk ke direktori proyek
 cd siber-sosial-classifier
@@ -61,34 +61,33 @@ cd siber-sosial-classifier
 # 2. Pasang dependensi
 pip install -r requirements.txt
 
-# 3. Jalankan pengujian skenario
+# 3. Jalankan pengujian pipeline
 python test_pipeline.py
 
-# 4. Jalankan server dashboard
+# 4. Jalankan server web
 python main.py
 ```
-Akses dashboard operasional melalui browser di `http://localhost:8000`. Dokumentasi interaktif Swagger API tersedia di `http://localhost:8000/docs`.
+Buka aplikasi melalui browser di `http://localhost:8000`. Dokumentasi API tersedia di `http://localhost:8000/docs`.
 
 ---
 
 ## 4. Deployment Menggunakan Docker
 
-Sistem dapat dijalankan langsung di server fisik atau home-server menggunakan Docker:
-
 ```bash
 docker compose up -d --build
 ```
 
-Untuk menghentikan:
+Untuk menghentikan layanan:
 ```bash
 docker compose down
 ```
 
 ---
 
-## 5. Spesifikasi Endpoint API
+## 5. Daftar Endpoint API
 
-* `POST /api/analyze`: Menerima JSON payload `{"text": "...", "url": "..."}` dan menghasilkan analisis risiko 3 layer, rincian bukti rujukan, serta rekomendasi penanganan.
-* `GET /api/fact-checks`: Menampilkan daftar arsip fakta yang tersimpan di basis pengetahuan lokal.
-* `GET /api/stats`: Informasi status mesin dan ringkasan distribusi kategori ancaman.
-* `GET /api/health`: Endpoint pengecekan status kesiapan layanan (*healthcheck*).
+* `POST /api/analyze`: Menerima payload JSON `{"text": "...", "url": "..."}` dan mengembalikan skor risiko 3 lapis, bukti rujukan, serta ringkasan analisis.
+* `POST /api/analyze/batch` & `POST /api/analyze/batch/upload`: Analisis massal daftar narasi/tautan atau unggahan berkas `.txt`/`.csv`.
+* `GET /api/fact-checks` & `POST /api/fact-checks`: Mengambil daftar arsip klarifikasi atau menambahkan entri rujukan baru.
+* `GET /api/stats`: Informasi status mesin dan distribusi kategori arsip fakta.
+* `GET /api/health`: Pengecekan status kesiapan layanan (*healthcheck*).

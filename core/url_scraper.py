@@ -2,10 +2,11 @@ import ipaddress
 import re
 import socket
 from html.parser import HTMLParser
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 import requests
 
 BLOCKED_HOSTNAMES = {"localhost", "127.0.0.1", "0.0.0.0", "::1"}
+MAX_SCRAPE_BYTES = 2 * 1024 * 1024
 
 
 class ArticleHTMLParser(HTMLParser):
@@ -94,6 +95,9 @@ class URLScraper:
         if parsed.scheme not in {"http", "https"}:
             raise ValueError(f"Protokol URL '{parsed.scheme}' tidak didukung. Gunakan HTTP atau HTTPS.")
 
+        if parsed.username or parsed.password:
+            raise ValueError("URL tidak boleh mengandung kredensial tersemat.")
+
         hostname = parsed.hostname
         if not hostname:
             raise ValueError("Format URL tidak valid (nama host tidak ditemukan).")
@@ -138,28 +142,42 @@ class URLScraper:
 
         with requests.Session() as session:
             for _ in range(max_redirects):
-                resp = session.get(
+                with session.get(
                     current_url,
                     headers=headers,
                     timeout=self.timeout,
                     allow_redirects=False,
-                )
+                    stream=True,
+                ) as resp:
+                    if resp.is_redirect or resp.is_permanent_redirect:
+                        next_url = resp.headers.get("Location")
+                        if not next_url:
+                            break
+                        current_url = self.validate_url(urljoin(current_url, next_url))
+                        continue
 
-                if resp.is_redirect or resp.is_permanent_redirect:
-                    next_url = resp.headers.get("Location")
-                    if not next_url:
-                        break
-                    current_url = self.validate_url(next_url)
-                    continue
+                    resp.raise_for_status()
 
-                resp.raise_for_status()
+                    content_type = resp.headers.get("Content-Type", "").lower()
+                    if "text/html" not in content_type and "application/xhtml+xml" not in content_type:
+                        raise ValueError(f"Tipe konten bukan HTML ({content_type}).")
 
-                content_type = resp.headers.get("Content-Type", "")
-                if "text/html" not in content_type and "application/xhtml+xml" not in content_type:
-                    raise ValueError(f"Tipe konten bukan HTML ({content_type}).")
+                    content_len = resp.headers.get("Content-Length")
+                    if content_len and content_len.isdigit() and int(content_len) > MAX_SCRAPE_BYTES:
+                        raise ValueError("Ukuran halaman melebihi batas maksimal 2 MB.")
 
-                encoding = resp.encoding or "utf-8"
-                html_text = resp.content.decode(encoding, errors="replace")
+                    chunks: list[bytes] = []
+                    total_bytes = 0
+                    for chunk in resp.iter_content(chunk_size=65536):
+                        if not chunk:
+                            continue
+                        total_bytes += len(chunk)
+                        if total_bytes > MAX_SCRAPE_BYTES:
+                            raise ValueError("Ukuran halaman melebihi batas maksimal 2 MB.")
+                        chunks.append(chunk)
+
+                    encoding = resp.encoding or "utf-8"
+                    html_text = b"".join(chunks).decode(encoding, errors="replace")
 
                 parser = ArticleHTMLParser()
                 parser.feed(html_text)
