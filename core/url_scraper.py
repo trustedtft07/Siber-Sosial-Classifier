@@ -108,7 +108,9 @@ class URLScraper:
         try:
             addr_info = socket.getaddrinfo(hostname, None)
         except socket.gaierror as exc:
-            raise ValueError(f"Gagal melakukan resolusi DNS untuk '{hostname}': {exc}") from exc
+            raise ValueError(
+                f"Domain '{hostname}' tidak ditemukan di DNS (tautan tidak aktif atau fiktif)."
+            ) from exc
 
         for entry in addr_info:
             ip_str = entry[4][0]

@@ -116,16 +116,19 @@ class RiskScorer:
         elif scaled_score >= 25.0:
             classification = "PERLU VERIFIKASI (BELUM TERBUKTI)"
             threat_level = "SEDANG"
-            action_code = "AWAITING_FURTHER_INTEL"
+            action_code = "NEED_FURTHER_VERIFICATION"
         else:
             classification = "VALID / TERKONFIRMASI"
             threat_level = "RENDAH"
             action_code = "CLEAR_STATUS"
 
+        matched_entry = best_match if sim_score >= 0.25 else None
         if fact_contradiction:
             threat_domain = "Penipuan Siber & Scam"  # meminta uang atas nama layanan resmi = modus penipuan
         else:
-            threat_domain = self._determine_threat_domain(raw_text, linguistic_data, best_match)
+            threat_domain = self._determine_threat_domain(
+                raw_text, linguistic_data, matched_entry, scaled_score
+            )
 
         return {
             "score": scaled_score,
@@ -138,7 +141,7 @@ class RiskScorer:
                 "evidence_risk": round(evidence_risk * 100, 1),
                 "source_risk": round(source_risk * 100, 1),
             },
-            "best_match": best_match if sim_score >= 0.25 else None,
+            "best_match": matched_entry,
             "zero_day_rumor": zero_day_rumor,
             "fact_contradiction": fact_contradiction,
             "fact_contradiction_note": fact_contradiction_note,
@@ -157,17 +160,30 @@ class RiskScorer:
                 return True
         return False
 
-    def _determine_threat_domain(self, text: str, linguistic_data: dict, best_match: dict | None) -> str:
+    def _determine_threat_domain(
+        self,
+        text: str,
+        linguistic_data: dict,
+        best_match: dict | None,
+        scaled_score: float | None = None,
+    ) -> str:
         text_lower = text.lower()
 
         if best_match and best_match.get("threat_category"):
             return best_match["threat_category"]
 
+        if scaled_score is not None and scaled_score < 25.0:
+            return "Informasi Umum"
+
         if any(w in text_lower for w in ["tni", "militer", "bintara", "panglima", "alutsista", "kodam", "babinsa"]):
+            if scaled_score is not None and scaled_score < 45.0:
+                return "Isu Pertahanan (Belum Terverifikasi)"
             return "Disinformasi Pertahanan"
         if linguistic_data.get("sara_triggers") or any(w in text_lower for w in ["agama", "suku", "pribumi", "etnis"]):
             return "Polarisasi SARA & Ketertiban"
         if any(w in text_lower for w in ["apk", "hadiah", "rekening", "transfer", "phising", "dana bantuan"]):
             return "Penipuan Siber & Scam"
 
+        if scaled_score is not None and scaled_score < 45.0:
+            return "Isu Publik (Belum Terverifikasi)"
         return "Manipulasi Isu Publik"

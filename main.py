@@ -344,6 +344,7 @@ def _execute_analysis(text: str, url: str | None, scraped_metadata: dict | None)
         linguistic_data=linguistic_result,
         evidence_list=evidence_matches,
         source_data=source_result,
+        scraped_metadata=scraped_metadata,
     )
 
     return {

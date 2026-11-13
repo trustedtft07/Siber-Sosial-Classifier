@@ -24,6 +24,18 @@ let cachedFactChecks = [];
 let latestBatchItems = [];
 const HISTORY_STORAGE_KEY = "siber_sosial_scan_history_v1";
 
+const ACTION_LABELS = {
+  RED_FLAG_TAKEDOWN_COUNTER: "Prioritaskan Klarifikasi",
+  MONITOR_FACTCHECK_CLARIFICATION: "Pantau & Siapkan Klarifikasi",
+  NEED_FURTHER_VERIFICATION: "Perlu Bukti Tambahan",
+  AWAITING_FURTHER_INTEL: "Perlu Bukti Tambahan",
+  CLEAR_STATUS: "Aman / Terkonfirmasi",
+};
+
+function formatActionLabel(code) {
+  return ACTION_LABELS[code] || code || "-";
+}
+
 // ============================================================================
 // 1. TAB CONTROLLER & PRESETS
 // ============================================================================
@@ -188,10 +200,10 @@ function renderAnalysis(data) {
   updateProgressBar(document.getElementById("bar-overall"), risk.score);
 
   // Metadata Ancaman
-  document.getElementById("val-domain").textContent = risk.threat_domain || "Netral / Terverifikasi";
+  document.getElementById("val-domain").textContent = risk.threat_domain || "Informasi Umum";
   const actionEl = document.getElementById("val-action");
   if (actionEl) {
-    actionEl.textContent = risk.action_code || "-";
+    actionEl.textContent = formatActionLabel(risk.action_code);
   }
 
   // Sub-skor 3 lapisan
@@ -320,7 +332,7 @@ function generateTacticalReportText(data) {
   text += `SKOR RISIKO HOAKS    : ${r.score} / 100\n`;
   text += `KLASIFIKASI ANCAMAN  : ${r.classification}\n`;
   text += `DOMAIN ANCAMAN       : ${r.threat_domain || '-'}\n`;
-  text += `KODE TINDAKAN        : ${r.action_code || '-'}\n`;
+  text += `REKOMENDASI STATUS   : ${formatActionLabel(r.action_code)}\n`;
   text += `--------------------------------------------------------------------------------\n`;
   text += `PRATINJAU INPUT NARASI:\n"${data.input_preview || '-'}"\n`;
   text += `--------------------------------------------------------------------------------\n`;
@@ -914,7 +926,7 @@ async function analyzeBatchContent() {
             preview: previewSrc.length > 70 ? previewSrc.substring(0, 68) + "..." : previewSrc,
             score: resItem.risk_assessment.score,
             classification: resItem.risk_assessment.classification,
-            action: resItem.risk_assessment.action_code || "REVIEW",
+            action: formatActionLabel(resItem.risk_assessment.action_code || "REVIEW"),
             hasDetail: true
           });
         }

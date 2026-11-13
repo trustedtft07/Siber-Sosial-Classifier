@@ -16,6 +16,7 @@ class XAIReasoner:
         linguistic_data: dict,
         evidence_list: list[dict],
         source_data: dict,
+        scraped_metadata: dict | None = None,
     ) -> dict:
         reasons = []
 
@@ -60,9 +61,12 @@ class XAIReasoner:
         elif source_data.get("is_chain_message"):
             reasons.append("Format teks teridentifikasi sebagai pesan berantai (forwarded/broadcast) tanpa rujukan primer.")
         elif source_data.get("source_tier") == "TIER_1_VERIFIED":
-            reasons.append("Tautan merujuk pada domain kredibel (.mil.id, .go.id, atau media pers terverifikasi).")
+            reasons.append("Tautan merujuk pada domain resmi (.go.id, .mil.id) atau media pers terverifikasi.")
         elif source_data.get("source_tier") == "TIER_3_SUSPICIOUS":
             reasons.append("Tautan menggunakan domain berisiko tinggi atau indikasi phishing/spoofing.")
+
+        if scraped_metadata and scraped_metadata.get("error"):
+            reasons.append(f"Verifikasi tautan gagal mengekstrak halaman: {scraped_metadata['error']}")
 
         brief = self._generate_tactical_brief(analysis_result, reasons, raw_text)
 
