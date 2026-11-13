@@ -1,0 +1,102 @@
+[
+  {
+    "id": "FC-DEF-001",
+    "claim": "Penerimaan Calon Bintara PK TNI AD 2026 membuka kuota jalur kilat dengan biaya administrasi via transfer rekening perorangan.",
+    "fact": "Rekrutmen prajurit TNI AD (Tamtama, Bintara, Perwira) sepenuhnya gratis dan tidak dipungut biaya apa pun. Pendaftaran resmi hanya dilakukan melalui portal resmi ad.rekrutmen-tni.mil.id atau Ajendam/Ajenrem setempat.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://tniad.mil.id/waspada-penipuan-rekrutmen-tni-ad",
+    "date": "2026-08-14"
+  },
+  {
+    "id": "FC-DEF-002",
+    "claim": "Beredar video pergerakan tank dan kendaraan taktis TNI AD di perbatasan menuju Ibu Kota dalam rangka pengambilalihan kekuasaan secara militer.",
+    "fact": "Video tersebut merupakan dokumentasi latihan tempur gabungan Batalyon Kavaleri di Pusat Latihan Tempur Baturaja tahun 2023, bukan pergerakan taktis untuk kudeta atau operasi politik.",
+    "verdict": "MISLEADING",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Puspen TNI & TurnBackHoax",
+    "reference_url": "https://turnbackhoax.id/klarifikasi-video-latihan-tank-baturaja",
+    "date": "2026-09-02"
+  },
+  {
+    "id": "FC-DEF-003",
+    "claim": "Surat telegram rahasia Panglima TNI AD memerintahkan siaga satu penembakan di tempat untuk demonstrasi buruh di kawasan industri.",
+    "fact": "Surat telegram yang beredar menggunakan format kop surat dan nomor registrasi palsu. TNI AD menegaskan tidak pernah menerbitkan instruksi penindakan represif bersenjata terhadap aksi damai masyarakat.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Puspen TNI",
+    "reference_url": "https://tni.mil.id/berita-klarifikasi-surat-telegram-palsu",
+    "date": "2026-07-19"
+  },
+  {
+    "id": "FC-POL-001",
+    "claim": "Kementerian Pertahanan menjual pangkalan militer Natuna kepada investor asing untuk konsesi energi selama 99 tahun.",
+    "fact": "Kementerian Pertahanan membantah keras klaim tersebut. Pangkalan militer terpadu Natuna tetap berada di bawah kedaulatan penuh NKRI dan dijaga satuan TNI AL dan TNI AU.",
+    "verdict": "SALAH",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Kemenkomdigi",
+    "reference_url": "https://komdigi.go.id/berita/hoaks-penjualan-pangkalan-natuna",
+    "date": "2026-06-25"
+  },
+  {
+    "id": "FC-SAR-001",
+    "claim": "Kerusuhan antar suku di Papua menyebabkan puluhan korban jiwa dan aparat TNI membiarkan aksi anarkis kelompok separatis.",
+    "fact": "Foto yang beredar adalah foto evakuasi longsor di luar negeri tahun 2021. Situasi keamanan di wilayah terkait kondusif dan dijaga aparat gabungan TNI-Polri.",
+    "verdict": "SALAH",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "TurnBackHoax / Mafindo",
+    "reference_url": "https://turnbackhoax.id/disinformasi-foto-konflik-papua",
+    "date": "2026-10-10"
+  },
+  {
+    "id": "FC-PUB-001",
+    "claim": "Pemerintah memberlakukan jam malam darurat sipil nasional dan pemadaman internet serentak mulai pukul 22.00 WIB.",
+    "fact": "Kemenko Polkam dan Kemenkomdigi menegaskan informasi tersebut hoaks. Tidak ada penetapan status darurat sipil maupun pembatasan akses jaringan internet.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "Kemenkomdigi",
+    "reference_url": "https://komdigi.go.id/berita/hoaks-jam-malam-darurat-sipil",
+    "date": "2026-08-30"
+  },
+  {
+    "id": "FC-SCM-001",
+    "claim": "Penyaluran dana santunan veteran dan pensiunan TNI AD melalui link pendaftaran web apk di Telegram.",
+    "fact": "Link tersebut merupakan situs phising pencurian data rekening dan OTP (credential harvesting). Pengurusan pensiun dan santunan veteran hanya melalui kantor ASABRI resmi.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber & Scam",
+    "source_agency": "Dispenad TNI AD & BSSN",
+    "reference_url": "https://tniad.mil.id/waspada-apk-phising-santunan-veteran",
+    "date": "2026-09-18"
+  },
+  {
+    "id": "FC-PUB-002",
+    "claim": "Air PDAM terkontaminasi racun mematikan di seluruh wilayah Jakarta setelah insiden kebocoran pipa utama.",
+    "fact": "PAM Jaya dan Dinas Kesehatan mengonfirmasi kualitas air perpipaan memenuhi standar baku mutu Permenkes dan tidak ada insiden kontaminasi racun.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "TurnBackHoax / Mafindo",
+    "reference_url": "https://turnbackhoax.id/klarifikasi-isu-racun-pdam-jakarta",
+    "date": "2026-05-11"
+  },
+  {
+    "id": "FC-DEF-004",
+    "claim": "Helikopter serbu milik Penerbad TNI AD jatuh di pemukiman padat penduduk saat latihan taktis pagi hari.",
+    "fact": "Penerbang Angkatan Darat (Penerbad) memastikan seluruh armada latihan mendarat dengan selamat di pangkalan Lanumad Ahmad Yani. Video yang beredar adalah rekaman kecelakaan helikopter sipil di Amerika Latin tahun 2019.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://tniad.mil.id/klarifikasi-kabar-burung-insiden-helikopter-penerbad",
+    "date": "2026-10-04"
+  },
+  {
+    "id": "FC-TRU-001",
+    "claim": "TNI AD memberangkatkan satgas kesehatan dan logistik untuk membantu evakuasi korban erupsi gunung berapi di wilayah timur.",
+    "fact": "Informasi valid. Mabes TNI AD secara resmi menggerakkan Batalyon Kesehatan Divisi Infanteri untuk operasi penanggulangan bencana alam.",
+    "verdict": "BENAR",
+    "threat_category": "Operasi Bantuan Kemanusiaan",
+    "source_agency": "Dispenad TNI AD",
+    "reference_url": "https://tniad.mil.id/tni-ad-terjunkan-satgas-bencana-erupsi",
+    "date": "2026-11-01"
+  }
+]
