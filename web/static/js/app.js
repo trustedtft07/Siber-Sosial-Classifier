@@ -133,13 +133,13 @@ function renderAnalysis(data) {
   classBadge.textContent = risk.classification;
 
   if (risk.score >= 70) {
-    scoreEl.style.color = "#dc2626";
+    scoreEl.style.color = "#ef4444";
     classBadge.className = "badge-status-pill badge-danger";
   } else if (risk.score >= 45) {
-    scoreEl.style.color = "#d97706";
+    scoreEl.style.color = "#f59e0b";
     classBadge.className = "badge-status-pill badge-warning";
   } else {
-    scoreEl.style.color = "#16a34a";
+    scoreEl.style.color = "#10b981";
     classBadge.className = "badge-status-pill badge-success";
   }
 
@@ -511,7 +511,7 @@ function filterKnowledgeBase() {
     else if (item.verdict === "MISLEADING") badgeClass = "badge-warning";
 
     const safeRefUrl = item.reference_url && /^https?:\/\//i.test(item.reference_url)
-      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.74rem; color: #2563eb; text-decoration: underline;">Tautan Rujukan</a>`
+      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.74rem; color: #ff6038; text-decoration: underline;">Tautan Rujukan</a>`
       : '';
 
     return `
@@ -814,7 +814,7 @@ async function analyzeBatchContent() {
       <tr>
         <td>${item.idx}</td>
         <td><code>${escapeHtml(item.preview)}</code></td>
-        <td><strong style="color: ${item.score >= 70 ? '#dc2626' : item.score >= 45 ? '#d97706' : '#16a34a'};">${item.score}</strong> / 100</td>
+        <td><strong style="color: ${item.score >= 70 ? '#ef4444' : item.score >= 45 ? '#f59e0b' : '#10b981'};">${item.score}</strong> / 100</td>
         <td><span class="badge ${badgeClass}">${escapeHtml(item.classification)}</span></td>
         <td><span class="badge badge-dark" style="font-size: 0.68rem;">${escapeHtml(item.action)}</span></td>
       </tr>
