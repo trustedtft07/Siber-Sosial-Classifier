@@ -7,7 +7,8 @@
     "threat_category": "Disinformasi Pertahanan",
     "source_agency": "Dispenad TNI AD",
     "reference_url": "https://tniad.mil.id/waspada-penipuan-rekrutmen-tni-ad",
-    "date": "2026-08-14"
+    "date": "2026-08-14",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-DEF-002",
@@ -17,7 +18,8 @@
     "threat_category": "Disinformasi Pertahanan",
     "source_agency": "Puspen TNI & TurnBackHoax",
     "reference_url": "https://turnbackhoax.id/klarifikasi-video-latihan-tank-baturaja",
-    "date": "2026-09-02"
+    "date": "2026-09-02",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-DEF-003",
@@ -27,7 +29,8 @@
     "threat_category": "Disinformasi Pertahanan",
     "source_agency": "Puspen TNI",
     "reference_url": "https://tni.mil.id/berita-klarifikasi-surat-telegram-palsu",
-    "date": "2026-07-19"
+    "date": "2026-07-19",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-POL-001",
@@ -37,7 +40,8 @@
     "threat_category": "Propaganda & Separatisme",
     "source_agency": "Kemenkomdigi",
     "reference_url": "https://komdigi.go.id/berita/hoaks-penjualan-pangkalan-natuna",
-    "date": "2026-06-25"
+    "date": "2026-06-25",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-SAR-001",
@@ -47,7 +51,8 @@
     "threat_category": "Polarisasi SARA & Ketertiban",
     "source_agency": "TurnBackHoax / Mafindo",
     "reference_url": "https://turnbackhoax.id/disinformasi-foto-konflik-papua",
-    "date": "2026-10-10"
+    "date": "2026-10-10",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-PUB-001",
@@ -57,7 +62,8 @@
     "threat_category": "Manipulasi Kebijakan Publik",
     "source_agency": "Kemenkomdigi",
     "reference_url": "https://komdigi.go.id/berita/hoaks-jam-malam-darurat-sipil",
-    "date": "2026-08-30"
+    "date": "2026-08-30",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-SCM-001",
@@ -67,7 +73,8 @@
     "threat_category": "Penipuan Siber & Scam",
     "source_agency": "Dispenad TNI AD & BSSN",
     "reference_url": "https://tniad.mil.id/waspada-apk-phising-santunan-veteran",
-    "date": "2026-09-18"
+    "date": "2026-09-18",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-PUB-002",
@@ -77,7 +84,8 @@
     "threat_category": "Manipulasi Kebijakan Publik",
     "source_agency": "TurnBackHoax / Mafindo",
     "reference_url": "https://turnbackhoax.id/klarifikasi-isu-racun-pdam-jakarta",
-    "date": "2026-05-11"
+    "date": "2026-05-11",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-DEF-004",
@@ -87,7 +95,8 @@
     "threat_category": "Disinformasi Pertahanan",
     "source_agency": "Dispenad TNI AD",
     "reference_url": "https://tniad.mil.id/klarifikasi-kabar-burung-insiden-helikopter-penerbad",
-    "date": "2026-10-04"
+    "date": "2026-10-04",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
     "id": "FC-TRU-001",
@@ -97,16 +106,337 @@
     "threat_category": "Operasi Bantuan Kemanusiaan",
     "source_agency": "Dispenad TNI AD",
     "reference_url": "https://tniad.mil.id/tni-ad-terjunkan-satgas-bencana-erupsi",
-    "date": "2026-11-01"
+    "date": "2026-11-01",
+    "data_status": "BELUM_DIVERIFIKASI"
   },
   {
-    "id": "FC-DIS-011",
-    "claim": "Latihan terjun payung Kostrad di Garut menimpa pemukiman warga sipil.",
-    "fact": "Latihan penerjunan berlangsung di dropping zone steril Ciwidey dan seluruh peterjun mendarat selamat.",
+    "id": "FC-DEF-005",
+    "claim": "Beredar video barisan kendaraan tempur TNI Anoa berjajar di Monas Jakarta Pusat untuk mengamankan aksi massa yang diperkirakan terjadi pada Agustus 2026.",
+    "fact": "Mabes TNI menyatakan klaim tersebut tidak benar. Kendaraan taktis yang terlihat di Monas merupakan bagian dari latihan persiapan upacara peringatan HUT ke-81 Kemerdekaan RI. Kapuspen TNI mengimbau masyarakat tidak menyebarkan hoaks apalagi provokasi.",
     "verdict": "SALAH",
     "threat_category": "Disinformasi Pertahanan",
-    "source_agency": "Penerangan Kostrad",
-    "reference_url": "https://tniad.mil.id/klarifikasi-latihan-peterjun-kostrad",
-    "date": "2026-11-12"
+    "source_agency": "Kapuspen TNI (via iNews/RCTI+)",
+    "reference_url": "https://www.rctiplus.com/news/detail/inews/5441608/viral-kendaraan-tempur-berjajar-di-monas--ini-kata-mabes-tni",
+    "date": "2026-08-01",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-DEF-006",
+    "claim": "Video YouTube menyebut ribuan prajurit TNI yang dipimpin Panglima TNI mendeklarasikan dukungan kepada Anies Baswedan sebagai presiden.",
+    "fact": "Puspen TNI menyatakan video tersebut telah diedit seolah-olah kegiatan Panglima TNI bersama Anies. Kegiatan yang ditampilkan adalah kunjungan Anies ke Kopassus pada 9 November 2019 saat masih menjabat Gubernur DKI Jakarta, dan ucapan anggota TNI dalam video telah diedit.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Puspen TNI (via CNN Indonesia)",
+    "reference_url": "https://www.cnnindonesia.com/nasional/20230518011301-12-951082/jubir-buka-suara-soal-hoaks-prajurit-tni-deklarasi-anies-presiden",
+    "date": "2023-05-18",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-DEF-007",
+    "claim": "Sepuluh warga negara Indonesia disebut menjadi tentara bayaran di Ukraina dan empat di antaranya tewas.",
+    "fact": "Data tersebut dirilis Kedutaan Besar Rusia berdasarkan data Kementerian Pertahanan Rusia. Panglima TNI menyebut isu itu hoaks setelah mengecek ke Kedutaan Besar Rusia dan tidak menemukan WNI yang dimaksud; Indonesia tidak menganut konsep tentara bayaran. KSAD menyatakan prajurit TNI tidak mungkin menjadi tentara bayaran karena keberangkatan ke luar negeri pasti terdeteksi.",
+    "verdict": "MISLEADING",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Panglima TNI & KSAD (via ANTARA)",
+    "reference_url": "https://jabar.antaranews.com/berita/504291/panglima-tni-tepis-isu-10-wni-jadi-tentara-bayaran-ukraina-sudah-dicek-di-kedubes-rusia?page=all",
+    "date": "2024-03-21",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-DEF-008",
+    "claim": "Beredar undangan atas nama Panglima TNI agar masyarakat berkumpul di Monas pada Sabtu 30 September pukul 07.00 pagi.",
+    "fact": "Puspen TNI dan Kapuspen TNI menegaskan tidak ada undangan resmi semacam itu dari Panglima TNI. Pengunggah mengakui video yang disertakan berasal dari tahun 2016 dan menyatakan akan menghapus unggahannya.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Puspen TNI (via JPNN)",
+    "reference_url": "https://www.jpnn.com/news/undangan-palsu-panglima-tni-masih-disebar",
+    "date": "2017-09-25",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-DEF-009",
+    "claim": "Pasukan elite TNI AL Denjaka sudah tiba di Papua untuk membasmi KKB.",
+    "fact": "Dankormar, Kadispenal, dan Kadispen Kormar menyatakan tidak ada pelibatan Denjaka di Papua dan menyebut kabar itu hoaks. Pasukan yang diberangkatkan ke Papua pada 27 April 2021 adalah Yonif 315/Garuda, bukan Denjaka. TurnBackHoax, kompas.com, dan merdeka.com juga menilai klaim ini salah. Catatan: tanggal 2021-05-01 adalah tanggal cuitan yang diperiksa, bukan tanggal terbit artikel.",
+    "verdict": "SALAH",
+    "threat_category": "Disinformasi Pertahanan",
+    "source_agency": "Dankormar, Kadispenal & Kadispen Kormar (via TIMES Indonesia)",
+    "reference_url": "https://timesindonesia.co.id/cek-fakta/345454/cek-fakta-denjaka-sudah-tiba-di-papua-untuk-basmi-kkb",
+    "date": "2021-05-01",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SAR-002",
+    "claim": "Seorang perwira intelijen strategis TNI ikut berdemonstrasi di Pejompongan Jakarta Pusat pada 28 Agustus 2025.",
+    "fact": "Kapuspen TNI menjelaskan perwira tersebut sedang menjalankan tugas mengumpulkan informasi tentang aksi demonstrasi, bukan ikut berdemonstrasi.",
+    "verdict": "MISLEADING",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "Kapuspen TNI (via InvestorTrust)",
+    "reference_url": "https://investortrust.id/national/78131/tni-bantah-lima-informasi-viral-yang-menyebut-tni-terlibat-aksi-demo-berujung-anarkistis",
+    "date": "2025-09-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SAR-003",
+    "claim": "Seorang pria yang mengaku anggota TNI ditangkap di Sumatera Utara pada 1 September 2025 karena terlibat kerusuhan demonstrasi.",
+    "fact": "Hasil pengecekan TNI menunjukkan pria tersebut tidak dapat menyebutkan satuan maupun menjelaskan kartu dinasnya. Ia adalah warga sipil yang bekerja di bidang transportasi, bukan prajurit TNI.",
+    "verdict": "SALAH",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "Kapuspen TNI (via InvestorTrust)",
+    "reference_url": "https://investortrust.id/national/78131/tni-bantah-lima-informasi-viral-yang-menyebut-tni-terlibat-aksi-demo-berujung-anarkistis",
+    "date": "2025-09-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SAR-004",
+    "claim": "Demonstran yang ditangkap di Ternate pada 1 September 2025 disebut anggota TNI yang memprovokasi aksi anarkis.",
+    "fact": "Hasil penyelidikan menunjukkan yang bersangkutan adalah seorang pelajar berusia 16 tahun yang mengaku sebagai anggota TNI. Ia bukan prajurit TNI.",
+    "verdict": "SALAH",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "Kapuspen TNI (via InvestorTrust)",
+    "reference_url": "https://investortrust.id/national/78131/tni-bantah-lima-informasi-viral-yang-menyebut-tni-terlibat-aksi-demo-berujung-anarkistis",
+    "date": "2025-09-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SAR-005",
+    "claim": "Seorang demonstran mengaku diperintah anak anggota TNI untuk menyerang Mako Brimob Cikeas.",
+    "fact": "Hasil pemeriksaan menunjukkan pria tersebut hanya mengaku ada anggota TNI yang memberi perintah, diduga agar lolos dari pemeriksaan polisi. Klaim keterlibatan anggota TNI itu tidak terbukti.",
+    "verdict": "MISLEADING",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "Kapuspen TNI (via InvestorTrust)",
+    "reference_url": "https://investortrust.id/national/78131/tni-bantah-lima-informasi-viral-yang-menyebut-tni-terlibat-aksi-demo-berujung-anarkistis",
+    "date": "2025-09-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SAR-006",
+    "claim": "Beredar banyak video di media sosial yang memperlihatkan demonstrasi besar yang sedang terjadi di berbagai daerah Indonesia.",
+    "fact": "Menko Polkam menyatakan video tersebut tidak benar dan saat ini tidak ada demonstrasi di wilayah Indonesia. Video diduga rekaman peristiwa lama yang diunggah ulang. Situasi disebut stabil dan terkendali.",
+    "verdict": "MISLEADING",
+    "threat_category": "Polarisasi SARA & Ketertiban",
+    "source_agency": "Menko Polkam (via JawaPos)",
+    "reference_url": "https://jawapos.com/nasional/2608050275/banyak-video-demo-beredar-di-medsos-menko-polkam-djamari-chaniago-itu-hoax-terjadi-di-masa-lalu",
+    "date": "2026-08-05",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-POL-002",
+    "claim": "Aparat gabungan TNI dan Polri mengusir pasien dan menutup IGD RSUD Madi di Paniai Papua Tengah, termasuk pasien anak-anak.",
+    "fact": "Kapendam XVII/Cenderawasih menyatakan TNI tidak pernah mengusir pasien. Aparat hadir untuk mengamankan rumah sakit dari ancaman pembakaran dan atas permintaan tim medis; pintu dipalang karena kunci rusak; pasien anak dialihkan ke RS Deiyai karena tidak ada dokter spesialis anak; foto yang beredar adalah kejadian lama. Catatan: artikel hanya memuat sudut pandang TNI.",
+    "verdict": "MISLEADING",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Kapendam XVII/Cenderawasih (via ANTARA/Koran Jakarta)",
+    "reference_url": "https://koran-jakarta.com/2024-05-27/tni-tegaskan-kabar-rsud-madi-di-paniai-ditutup-itu-hoax/amp",
+    "date": "2024-05-27",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-POL-003",
+    "claim": "Korban penyerangan KKB di Yahukimo Papua adalah agen intelijen TNI.",
+    "fact": "Kepala Biro Informasi dan Humas Kemhan menyatakan narasi itu propaganda untuk menyudutkan Pemerintah RI dan TNI. Korban adalah warga sipil yang sedang mendulang emas secara ilegal; 11 warga sipil meninggal dan korban dievakuasi kepolisian, sehingga tidak ada prajurit TNI yang menjadi korban.",
+    "verdict": "SALAH",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Kemhan RI (via ANTARA)",
+    "reference_url": "https://kupang.antaranews.com/berita/153965/kemhan-narasi-korban-kkb-di-yahukimo-merupakan-intel-itu-propaganda-sudutkan-indonesia",
+    "date": "2025-04-10",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-POL-004",
+    "claim": "Video memperlihatkan bangunan terbakar akibat bom yang dijatuhkan TNI-Polri di Papua.",
+    "fact": "Satgas Damai Cartenz Polri menyatakan video tersebut adalah dokumentasi kebakaran Puskesmas di Distrik Kiwirok, Kabupaten Pegunungan Bintang, pada 2021 yang dilakukan KKB, lalu diedit dan dinarasikan seolah akibat bom TNI-Polri.",
+    "verdict": "SALAH",
+    "threat_category": "Propaganda & Separatisme",
+    "source_agency": "Satgas Damai Cartenz Polri (via Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/bVDCj8DZ-polri-kkb-gandeng-wna-buat-video-dokumenter-palsu-untuk-sebar-fitnah",
+    "date": "2025-01-26",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-PUB-003",
+    "claim": "Perang Dunia ke-3 resmi diumumkan dan Indonesia mewajibkan setiap warga mengikuti wajib militer.",
+    "fact": "Kapuspen TNI menyatakan narasi tersebut hoaks dan tidak ada wajib militer di Indonesia; orang-orang dalam video tampaknya peserta seleksi masuk TNI. Kemhan menjelaskan pelibatan warga sipil saat ini bersifat sukarela. Penelusuran yang mengutip TurnBackHoax.id menilai unggahan itu konten palsu.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "Kapuspen TNI & Kemhan (via Suara.com, mengutip TurnBackHoax.id)",
+    "reference_url": "https://www.suara.com/news/2025/08/06/214803/cek-fakta-klaim-indonesia-terapkan-wamil-gegara-perang-dunia-ke-3",
+    "date": "2025-08-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-PUB-004",
+    "claim": "Beredar Surat Peringatan atas nama Kementerian Komunikasi dan Digital yang menyebut akan ada pemadaman internet nasional selama tiga hari pada 25 sampai 27 September 2026.",
+    "fact": "Wamenkomdigi menyatakan dokumen itu palsu dan mencatut nama serta tanda tangan Menkomdigi. Tidak ada rencana pemadaman internet nasional; layanan internet, perbankan, dan seluler berjalan normal. Masyarakat diimbau tidak menarik uang secara berlebihan dan memeriksa informasi lewat komdigi.go.id.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "Kemenkomdigi (via InfoPublik)",
+    "reference_url": "https://infopublik.id/kategori/siaran-pers/990850/siaran-pers-beredar-hoaks-tentang-pemadaman-internet-wamenkomdigi-gandeng-aph-kejar-pelaku",
+    "date": "2026-09-24",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-PUB-005",
+    "claim": "TikTok, Instagram, Facebook, dan YouTube akan dinonaktifkan di Indonesia mulai 28 Maret 2026.",
+    "fact": "ANTARA menilai klaim ini hoaks. Kebijakan yang berlaku adalah pembatasan usia: anak di bawah 16 tahun dilarang memiliki akun media sosial, diatur dalam Permen Komdigi No. 9 Tahun 2026 sebagai turunan PP Tunas (PP No. 17 Tahun 2025) dan diterapkan bertahap mulai 28 Maret 2026.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "ANTARA (penelusuran redaksi)",
+    "reference_url": "https://www.antaranews.com/berita/5471826/hoaks-komdigi-nonaktifkan-facebook-instagram-tiktok-youtube-pada-28-maret",
+    "date": "2026-03-13",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-PUB-006",
+    "claim": "Pemerintah melarang media massa meliput aksi demonstrasi.",
+    "fact": "Menkomdigi menyatakan Kemenkomdigi tidak pernah mengeluarkan larangan peliputan selama mengikuti kaidah jurnalistik dan UU Pers, dan meminta media tetap meliput serta memberitakan yang benar dengan cepat.",
+    "verdict": "SALAH",
+    "threat_category": "Manipulasi Kebijakan Publik",
+    "source_agency": "Menkomdigi (via InvestorTrust)",
+    "reference_url": "https://investortrust.id/national/111616/meutya-hafid-bantah-isu-pemerintah-larang-media-massa-liput-demo",
+    "date": "2026-08-03",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SCM-002",
+    "claim": "Anak bisa diloloskan menjadi anggota TNI jalur PAPK dengan mentransfer uang secara bertahap, lengkap dengan surat kelulusan resmi.",
+    "fact": "Polres Kulon Progo menyatakan surat kelulusan tersebut rekayasa dan nama anak korban tidak tercatat sebagai peserta yang lolos saat dicek ke TNI. Penipuan ini merugikan korban sekitar Rp310 juta. Proses seleksi resmi dilakukan transparan dan tanpa pungutan liar.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber & Scam",
+    "source_agency": "Polres Kulon Progo (via Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/b3JCpAVL-korban-penipuan-rekrutmen-tni-di-kulon-progo-rugi-rp310-juta-tiga-pelaku-ditangkap",
+    "date": "2025-06-09",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SCM-003",
+    "claim": "Oknum prajurit menjanjikan kelulusan calon Tamtama TNI AD Gelombang I dan II 2026 asalkan menyerahkan sejumlah uang.",
+    "fact": "Kapendam XV/Pattimura menyatakan penyerahan uang itu murni perbuatan oknum secara pribadi dan bukan atas nama satuan atau institusi TNI. Masuk menjadi prajurit TNI AD gratis; praktik percaloan diproses hukum dan dapat berujung pemberhentian tidak dengan hormat. Kerugian dilaporkan sekitar Rp112 juta.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber & Scam",
+    "source_agency": "Kapendam XV/Pattimura (via InvestorTrust/ANTARA)",
+    "reference_url": "https://investortrust.id/national/118301/kodam-pattimura-buru-serma-su-buronan-kasus-calo-penerimaan-prajurit-tni-ad",
+    "date": "2026-10-04",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SCM-004",
+    "claim": "Aplikasi Coretax tersedia sebagai file APK yang dikirim petugas pajak lewat WhatsApp untuk dipasang di ponsel.",
+    "fact": "Group-IB melaporkan aplikasi Coretax palsu berbentuk APK memberi pelaku akses jarak jauh ke ponsel dan memungkinkan transaksi perbankan tanpa izin. Coretax hanya diakses melalui situs resminya, bukan aplikasi seluler. Korban dipancing lewat situs phishing, pesan WhatsApp yang menyamar sebagai petugas pajak, dan telepon (vishing). Catatan: artikel tidak memuat pernyataan DJP atau Komdigi.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber & Scam",
+    "source_agency": "Group-IB (via Infosecurity Magazine)",
+    "reference_url": "https://www.infosecurity-magazine.com/news/fake-coretax-apps-fraud-indonesia",
+    "date": "2026-02-19",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-SCM-005",
+    "claim": "Pesan WhatsApp atau SMS atas nama instansi resmi berisi notifikasi layanan, hadiah, atau undangan penting dengan lampiran file APK.",
+    "fact": "Ini modus penipuan: file APK berbahaya disamarkan sebagai aplikasi resmi. Jika dipasang, malware aktif di latar belakang, membuka akses ke data pribadi dan akun perbankan, dan perangkat dapat dikendalikan tanpa izin. Informasi dikutip dari imbauan BCA.",
+    "verdict": "SALAH",
+    "threat_category": "Penipuan Siber & Scam",
+    "source_agency": "BCA (via Momsmoney/Kontan)",
+    "reference_url": "https://momsmoney.kontan.co.id/news/awas-file-apk-palsu-cara-jitu-hindari-penipuan-digital-yang-incar-data-pribadi",
+    "date": "2025-10-01",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-002",
+    "claim": "TNI AD memberangkatkan Kapal ADRI LII dari Jakarta membawa logistik dan perlengkapan penanggulangan bencana untuk wilayah Medan dan Lhokseumawe.",
+    "fact": "Kapal ADRI LII diberangkatkan 25 Desember 2025 pukul 09.30 WIB dengan 37 awak, rute Jakarta-Belawan-Lhokseumawe-Malahayati. Muatan mencakup dua set Jembatan Bailey Garuda, ratusan tenda, kendaraan taktis, serta bantuan kemanusiaan seperti makanan siap saji, logistik kesehatan, dan toren air.",
+    "verdict": "BENAR",
+    "threat_category": "Operasi Bantuan Kemanusiaan",
+    "source_agency": "TNI AD (liputan Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/NxGCPo9E-tni-ad-kembali-berangkatkan-kapal-adri-lii-bawa-logistik-penanggulangan-bencana-ke-sumut-dan-aceh",
+    "date": "2025-12-25",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-003",
+    "claim": "TNI AD mengirim logistik skala besar ke Aceh, Sumatera Utara, dan Sumatera Barat dengan Kapal ADRI XCII-BM.",
+    "fact": "Kadispenad Brigjen TNI Donny Pramono menyampaikan kapal diberangkatkan dari Tanjung Priok pada 2 Desember 2025 membawa 8.690 koli seberat 88.457 kg (makanan siap saji, beras, air mineral, selimut, perlengkapan sanitasi, kendaraan, dan perangkat komunikasi) sebagai tindak lanjut arahan Presiden.",
+    "verdict": "BENAR",
+    "threat_category": "Operasi Bantuan Kemanusiaan",
+    "source_agency": "Kadispenad TNI AD (via IDX Channel)",
+    "reference_url": "https://www.idxchannel.com/news/tni-ad-kirim-logistik-skala-besar-ke-lokasi-bencana-aceh-sumut-sumbar/all",
+    "date": "2025-12-03",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-004",
+    "claim": "Dua ratus personel Satgas Yonif TP 837/Ksatria Trunojoyo Kodam V/Brawijaya diberangkatkan dari Surabaya ke Aceh Utara untuk membantu pemulihan pascabencana.",
+    "fact": "Pangdam V/Brawijaya memimpin upacara pemberangkatan di Lanudal Juanda; kloter pertama 100 personel terbang dengan Hercules C-130 menuju Lhokseumawe. Penugasan berupa bantuan penanggulangan bencana dan pemulihan warga terdampak.",
+    "verdict": "BENAR",
+    "threat_category": "Operasi Bantuan Kemanusiaan",
+    "source_agency": "Pangdam V/Brawijaya (via detikJatim)",
+    "reference_url": "https://www.detik.com/jatim/berita/d-8283048/200-personel-tni-dari-jatim-diberangkatkan-ke-sumatera",
+    "date": "2025-12-29",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-005",
+    "claim": "TNI mengerahkan lebih dari 4.000 prajurit dan pesawat Hercules serta A400M membawa bantuan untuk korban banjir di Aceh, Sumatera Utara, dan Sumatera Barat.",
+    "fact": "Bantuan diberangkatkan dari Lanud Halim Perdanakusuma dengan tiga pesawat C-130 dan satu A400M, antara lain 3.000 paket Naraga, 100 genset, 100 perangkat Starlink, 150 tenda, dan tiga tim kesehatan Puskesad. Informasi bersumber dari TNI (dokumentasi Puspen TNI).",
+    "verdict": "BENAR",
+    "threat_category": "Operasi Bantuan Kemanusiaan",
+    "source_agency": "Puspen TNI (via Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/N9nCy9LX-tni-kirim-bantuan-kemanusiaan-ke-tiga-provinsi-terdampak-bencana",
+    "date": "2025-11-28",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-006",
+    "claim": "Pendaftaran Bintara PK TNI AD Gelombang I Tahun Anggaran 2026 dibuka 7 Januari sampai 6 Februari 2026 secara online dan tidak dipungut biaya.",
+    "fact": "Pendaftaran dilakukan melalui laman ad.rekrutmen-tni.mil.id, dilanjutkan validasi di Ajendam/Ajenrem. Seluruh proses sampai seleksi tidak dipungut biaya; calon diimbau waspada terhadap calo atau penipuan yang menjanjikan kelulusan.",
+    "verdict": "BENAR",
+    "threat_category": "Rekrutmen & Informasi Resmi",
+    "source_agency": "TNI AD (liputan Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/kELCnqze-tni-ad-buka-pendaftaran-bintara-2026-cek-jadwal-syarat-dan-alur-pendaftarannya",
+    "date": "2026-01-07",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-007",
+    "claim": "Pendaftaran online rekrutmen TNI AD dibuka mulai 20 April 2026 hingga kuota terpenuhi, tanpa biaya sepeser pun.",
+    "fact": "Menurut Metro TV yang mengacu pada laman resmi rekrutmen TNI AD, daftar ulang dijadwalkan 2 Mei 2026. Calon peserta yang menemukan permintaan imbalan atau calo diminta melapor. Informasi kuota diumumkan rutin melalui akun TikTok resmi Panpus TNI AD.",
+    "verdict": "BENAR",
+    "threat_category": "Rekrutmen & Informasi Resmi",
+    "source_agency": "TNI AD (liputan Metro TV)",
+    "reference_url": "https://www.metrotvnews.com/read/KZmCQL0P-tni-ad-buka-rekrutmen-gratis-ini-jadwal-syarat-dan-cara-daftarnya",
+    "date": "2026-04-22",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-008",
+    "claim": "Rekrutmen Bintara PK dan Tamtama TNI AD Tahun Anggaran 2025 tidak dipungut biaya.",
+    "fact": "Dandim 0704 Banjarnegara menyampaikan hal ini saat buka bersama mahasiswa, ormas, dan media, serta meminta informasinya disebarkan ke masyarakat. Pendaftaran TNI AD dibuka setiap tahun secara online. Catatan: tanggal adalah tanggal acara (26 Maret 2025); artikel tidak mencantumkan tanggal terbit.",
+    "verdict": "BENAR",
+    "threat_category": "Rekrutmen & Informasi Resmi",
+    "source_agency": "Kodim 0704/Banjarnegara (via TIMES Indonesia)",
+    "reference_url": "https://timesindonesia.co.id/indonesia-positif/533463/kodim-0704-banjarnegara-kembali-sampaikan-informasi-rekrutmen-anggota-tni-gratis",
+    "date": "2025-03-26",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-009",
+    "claim": "Masuk menjadi prajurit TNI AD itu gratis, dan pihak yang meminta atau menjadi perantara uang kelulusan akan diproses hukum.",
+    "fact": "Kapendam XV/Pattimura menyampaikan penerimaan prajurit TNI AD tidak dipungut biaya dan praktik percaloan tidak ditoleransi, dengan ancaman proses hukum dan pemberhentian tidak dengan hormat. Masyarakat diminta melapor ke Kodim atau Koramil terdekat.",
+    "verdict": "BENAR",
+    "threat_category": "Rekrutmen & Informasi Resmi",
+    "source_agency": "Kapendam XV/Pattimura (via InvestorTrust/ANTARA)",
+    "reference_url": "https://investortrust.id/national/118301/kodam-pattimura-buru-serma-su-buronan-kasus-calo-penerimaan-prajurit-tni-ad",
+    "date": "2026-10-04",
+    "data_status": "TERVERIFIKASI_SUMBER"
+  },
+  {
+    "id": "FC-TRU-010",
+    "claim": "Pelibatan warga sipil dalam pertahanan negara saat ini bersifat sukarela melalui program Komponen Cadangan dan Bela Negara, bukan wajib militer.",
+    "fact": "Kepala Biro Informasi Pertahanan Kemhan menjelaskan pelibatan warga sipil ke militer bersifat sukarela. Ia menambahkan wajib militer terbuka mungkin diberlakukan di masa depan tetapi terkendala anggaran yang sangat besar. Kapuspen TNI menegaskan tidak ada wajib militer di Indonesia.",
+    "verdict": "BENAR",
+    "threat_category": "Rekrutmen & Informasi Resmi",
+    "source_agency": "Kemhan RI & Kapuspen TNI (via Suara.com)",
+    "reference_url": "https://www.suara.com/news/2025/08/06/214803/cek-fakta-klaim-indonesia-terapkan-wamil-gegara-perang-dunia-ke-3",
+    "date": "2025-08-06",
+    "data_status": "TERVERIFIKASI_SUMBER"
   }
 ]
