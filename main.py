@@ -1,4 +1,5 @@
 import os
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -24,6 +25,8 @@ app = FastAPI(
     version="1.1.0",
 )
 
+ASSET_VERSION = str(int(time.time()))
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -31,6 +34,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def add_cache_headers(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/static/"):
+        response.headers["Cache-Control"] = "public, max-age=0, must-revalidate"
+    elif request.url.path == "/":
+        response.headers["Cache-Control"] = "no-store"
+    return response
+
 
 app.mount("/static", StaticFiles(directory=str(BASE_DIR / "web" / "static")), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "web" / "templates"))
@@ -109,7 +123,11 @@ def _execute_analysis(text: str, url: str | None, scraped_metadata: dict | None)
 
 @app.get("/", response_class=HTMLResponse)
 async def serve_dashboard(request: Request):
-    return templates.TemplateResponse(request=request, name="index.html")
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"asset_version": ASSET_VERSION},
+    )
 
 
 @app.post("/api/analyze")
