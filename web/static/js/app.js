@@ -14,13 +14,14 @@ const PRESETS = {
     url: ""
   },
   3: {
-    text: "Mabes TNI AD secara resmi memberangkatkan satgas kesehatan dan logistik Batalyon Kesehatan Divif untuk membantu evakuasi warga korban erupsi gunung berapi di wilayah timur.",
-    url: "https://tniad.mil.id/tni-ad-terjunkan-satgas-bencana-erupsi"
+    text: "TNI AD mengerahkan 169 prajurit melalui Kodam IX/Udayana dan Korem 161/Wira Sakti beserta dukungan kesehatan dan logistik untuk membantu korban erupsi Gunung Lewotobi di Flores Timur, NTT.",
+    url: "https://nasional.kompas.com/read/2024/11/25/09475381/tni-ad-kerahkan-169-prajurit-bantu-korban-erupsi-gunung-lewotobi"
   }
 };
 
 let latestAnalysisData = null;
 let cachedFactChecks = [];
+let latestBatchItems = [];
 const HISTORY_STORAGE_KEY = "siber_sosial_scan_history_v1";
 
 // ============================================================================
@@ -53,12 +54,50 @@ function switchTab(mode) {
   }
 }
 
+function updateCharCount() {
+  const inputText = document.getElementById("input-text");
+  const countEl = document.getElementById("input-char-count");
+  if (!inputText || !countEl) return;
+  const len = inputText.value.length;
+  countEl.textContent = `${len.toLocaleString("id-ID")} / 15.000 karakter`;
+}
+
+function setActivePreset(id) {
+  document.querySelectorAll(".btn-sample[data-preset]").forEach(btn => {
+    btn.classList.toggle("active", Number(btn.dataset.preset) === id);
+  });
+}
+
+function clearInputFields() {
+  const inputText = document.getElementById("input-text");
+  const inputUrl = document.getElementById("input-url");
+  if (inputText) inputText.value = "";
+  if (inputUrl) inputUrl.value = "";
+  setActivePreset(0);
+  updateCharCount();
+  if (inputText) inputText.focus();
+}
+
+function focusPanel(panelId, pulse = false) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  panel.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (pulse) {
+    panel.classList.remove("panel-pulse");
+    void panel.offsetWidth;
+    panel.classList.add("panel-pulse");
+    setTimeout(() => panel.classList.remove("panel-pulse"), 900);
+  }
+}
+
 function loadPreset(id) {
   const p = PRESETS[id];
   if (!p) return;
   switchTab("single");
+  setActivePreset(id);
   document.getElementById("input-text").value = p.text;
   document.getElementById("input-url").value = p.url;
+  updateCharCount();
   analyzeContent();
 }
 
@@ -111,6 +150,9 @@ async function analyzeContent() {
     renderAnalysis(data);
     saveToHistory(data, text || data.input_preview || url, url);
     showToast("Pemeriksaan selesai.", "success");
+    if (window.matchMedia("(max-width: 960px)").matches) {
+      focusPanel("result-panel", true);
+    }
   } catch (err) {
     showToast(`Terjadi kesalahan: ${err.message}`, "info");
     console.error("Analysis Error:", err);
@@ -206,12 +248,16 @@ function renderAnalysis(data) {
     const isSalah = bm.verdict === 'SALAH';
     const isMisleading = bm.verdict === 'MISLEADING';
     const badgeClass = isSalah ? 'badge-danger' : isMisleading ? 'badge-warning' : 'badge-success';
+    const refLinkHtml = bm.reference_url && /^https?:\/\//i.test(bm.reference_url)
+      ? `<div><a href="${escapeHtml(bm.reference_url)}" target="_blank" rel="noopener noreferrer" class="ref-link-inline">Buka Sumber Klarifikasi</a></div>`
+      : '';
 
     evidBox.innerHTML = `
       <strong>Arsip Rujukan Terdekat:</strong> [${escapeHtml(bm.id)}] ${escapeHtml(bm.source_agency)} (${escapeHtml(bm.date || '-')})<br>
       <strong>Status Vonis:</strong> <span class="badge ${badgeClass}">${escapeHtml(bm.verdict)}</span> &bull; 
       <strong>Kemiripan Kosinus:</strong> ${(bm.similarity_score * 100).toFixed(1)}%<br>
       <strong>Fakta Terverifikasi:</strong> ${escapeHtml(bm.fact)}
+      ${refLinkHtml}
       ${contradictionHtml}
     `;
   } else {
@@ -308,9 +354,30 @@ async function copyTacticalReport() {
   }
   const report = generateTacticalReportText(latestAnalysisData);
   try {
-    await navigator.clipboard.writeText(report);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(report);
+    } else {
+      throw new Error("Clipboard API tidak tersedia");
+    }
     showToast("Laporan berhasil disalin ke clipboard.", "success");
   } catch (err) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = report;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      const copied = document.execCommand("copy");
+      document.body.removeChild(ta);
+      if (copied) {
+        showToast("Laporan berhasil disalin ke clipboard.", "success");
+        return;
+      }
+    } catch (_) {
+      // Fall through to toast below
+    }
     showToast("Gagal menyalin: Izin clipboard tidak diberikan.", "info");
   }
 }
@@ -395,7 +462,8 @@ function renderHistory() {
         <li class="history-item" data-history-index="${idx}">
           <span class="history-text" title="${escapeHtml(item.rawText || item.rawUrl || '')}">${escapeHtml(item.preview)}</span>
           <div class="history-meta">
-            <span style="font-size: 0.72rem; color: #71717a;">${escapeHtml(item.timestamp)}</span>
+            <span class="history-time">${escapeHtml(item.timestamp)}</span>
+            <span class="history-reload-hint">Ketuk untuk muat</span>
             <span class="badge ${badgeClass}">${item.score}</span>
           </div>
         </li>
@@ -413,10 +481,15 @@ function loadHistoryItem(idx) {
     if (item && item.data) {
       document.getElementById("input-text").value = item.rawText || "";
       document.getElementById("input-url").value = item.rawUrl || "";
+      setActivePreset(0);
+      updateCharCount();
       latestAnalysisData = item.data;
       renderAnalysis(item.data);
       if (typeof navigateToPage === "function") {
         navigateToPage("analisis");
+      }
+      if (window.matchMedia("(max-width: 960px)").matches) {
+        setTimeout(() => focusPanel("result-panel", true), 60);
       }
       showToast("Data riwayat dimuat ke lembar analisis.", "info");
     }
@@ -511,20 +584,20 @@ function filterKnowledgeBase() {
     else if (item.verdict === "MISLEADING") badgeClass = "badge-warning";
 
     const safeRefUrl = item.reference_url && /^https?:\/\//i.test(item.reference_url)
-      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.74rem; color: #ff6038; text-decoration: underline;">Tautan Rujukan</a>`
+      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" class="kb-ref-link">Tautan Rujukan</a>`
       : '';
 
     return `
-      <tr>
-        <td><code>${escapeHtml(item.id)}</code></td>
-        <td><span style="font-size: 0.78rem; font-weight: 500; color: #3f3f46;">${escapeHtml(item.threat_category)}</span></td>
-        <td>
-          <div style="font-weight: 600; color: #18181b; margin-bottom: 0.2rem;">${escapeHtml(item.claim)}</div>
-          <div style="font-size: 0.78rem; color: #52525b;"><strong>Fakta:</strong> ${escapeHtml(item.fact)}</div>
+      <tr class="kb-row-card">
+        <td class="td-id"><code>${escapeHtml(item.id)}</code></td>
+        <td class="td-cat"><span class="kb-cat-label">${escapeHtml(item.threat_category)}</span></td>
+        <td class="td-main">
+          <div class="kb-claim-text">${escapeHtml(item.claim)}</div>
+          <div class="kb-fact-text"><strong>Fakta:</strong> ${escapeHtml(item.fact)}</div>
         </td>
-        <td><span class="badge ${badgeClass}">${escapeHtml(item.verdict)}</span></td>
-        <td>
-          <div style="font-size: 0.8rem; font-weight: 500;">${escapeHtml(item.source_agency)}</div>
+        <td class="td-verdict"><span class="badge ${badgeClass}">${escapeHtml(item.verdict)}</span></td>
+        <td class="td-source">
+          <div class="kb-agency-name">${escapeHtml(item.source_agency)}</div>
           ${safeRefUrl}
         </td>
       </tr>
@@ -642,13 +715,35 @@ function hasBinaryMagicOrControlBytes(bytes) {
   return false;
 }
 
-async function handleBatchFileUpload(event) {
-  const input = event.target;
-  const file = input.files[0];
+function setBatchDropzoneState(filename = "") {
+  const dropzone = document.getElementById("batch-dropzone");
+  const labelText = document.getElementById("batch-file-name");
+  const clearBtn = document.getElementById("btn-clear-batch-file");
+  if (!dropzone || !labelText) return;
+
+  if (filename) {
+    dropzone.classList.add("has-file");
+    labelText.textContent = `Terpilih: ${filename}`;
+    if (clearBtn) clearBtn.style.display = "inline-flex";
+  } else {
+    dropzone.classList.remove("has-file");
+    labelText.textContent = "Pilih atau letakkan berkas .txt / .csv";
+    if (clearBtn) clearBtn.style.display = "none";
+  }
+}
+
+function clearBatchFile() {
+  const input = document.getElementById("batch-file");
+  if (input) input.value = "";
+  setBatchDropzoneState("");
+}
+
+async function processBatchFile(file, inputEl = null) {
   if (!file) return;
 
   const resetInput = () => {
-    input.value = "";
+    if (inputEl) inputEl.value = "";
+    setBatchDropzoneState("");
   };
 
   if (/[\\/\0]|\.\./.test(file.name) || file.name.length > 150) {
@@ -706,11 +801,37 @@ async function handleBatchFileUpload(event) {
     }
 
     document.getElementById("batch-text").value = json.text || "";
+    setBatchDropzoneState(json.filename || file.name);
     showToast(`Berkas ${json.filename || file.name} dimuat (${json.entry_count} entri).`, "success");
   } catch (err) {
     showToast(err.message || "Berkas harus berupa teks UTF-8 yang valid.", "info");
     resetInput();
   }
+}
+
+async function handleBatchFileUpload(event) {
+  const input = event.target;
+  await processBatchFile(input.files[0], input);
+}
+
+function loadBatchItemDetail(idx) {
+  const item = latestBatchItems[idx];
+  if (!item || !item.analysisData) return;
+
+  const inputText = document.getElementById("input-text");
+  const inputUrl = document.getElementById("input-url");
+  if (inputText) inputText.value = item.rawText || "";
+  if (inputUrl) inputUrl.value = item.rawUrl || "";
+  setActivePreset(0);
+  updateCharCount();
+
+  latestAnalysisData = item.analysisData;
+  renderAnalysis(item.analysisData);
+  navigateToPage("analisis");
+  if (window.matchMedia("(max-width: 960px)").matches) {
+    setTimeout(() => focusPanel("result-panel", true), 60);
+  }
+  showToast("Detail hasil pemindaian dibuka.", "info");
 }
 
 async function analyzeBatchContent() {
@@ -744,6 +865,7 @@ async function analyzeBatchContent() {
   tbody.innerHTML = `<tr><td colspan="5" class="table-empty">Memproses pemindaian...</td></tr>`;
 
   const batchResults = [];
+  latestBatchItems = [];
   const CHUNK_SIZE = 20;
 
   for (let offset = 0; offset < items.length; offset += CHUNK_SIZE) {
@@ -767,35 +889,46 @@ async function analyzeBatchContent() {
       const json = await res.json();
       (json.results || []).forEach((resItem, localIdx) => {
         const rawEntry = chunk[localIdx] || "";
+        const isUrl = /^https?:\/\/\S+$/i.test(rawEntry);
         const globalIdx = offset + localIdx + 1;
 
         if (resItem.status === "error" || !resItem.risk_assessment) {
+          latestBatchItems.push(null);
           batchResults.push({
             idx: globalIdx,
             preview: rawEntry.length > 70 ? rawEntry.substring(0, 68) + "..." : rawEntry,
             score: 0,
             classification: "GAGAL ANALISIS",
-            action: resItem.message || "ERROR"
+            action: resItem.message || "ERROR",
+            hasDetail: false
           });
         } else {
           const previewSrc = resItem.input_preview || rawEntry;
+          latestBatchItems.push({
+            rawText: isUrl ? "" : rawEntry,
+            rawUrl: isUrl ? rawEntry : "",
+            analysisData: resItem
+          });
           batchResults.push({
             idx: globalIdx,
             preview: previewSrc.length > 70 ? previewSrc.substring(0, 68) + "..." : previewSrc,
             score: resItem.risk_assessment.score,
             classification: resItem.risk_assessment.classification,
-            action: resItem.risk_assessment.action_code || "REVIEW"
+            action: resItem.risk_assessment.action_code || "REVIEW",
+            hasDetail: true
           });
         }
       });
     } catch (e) {
       chunk.forEach((rawEntry, localIdx) => {
+        latestBatchItems.push(null);
         batchResults.push({
           idx: offset + localIdx + 1,
           preview: rawEntry.length > 50 ? rawEntry.substring(0, 48) + "..." : rawEntry,
           score: 0,
           classification: "ERROR KONEKSI",
-          action: "ERROR"
+          action: "ERROR",
+          hasDetail: false
         });
       });
     }
@@ -805,18 +938,31 @@ async function analyzeBatchContent() {
 
   countBadge.textContent = `${batchResults.length} selesai`;
 
-  tbody.innerHTML = batchResults.map(item => {
+  tbody.innerHTML = batchResults.map((item, rowIndex) => {
     let badgeClass = "badge-success";
-    if (item.score >= 70) badgeClass = "badge-danger";
-    else if (item.score >= 45) badgeClass = "badge-warning";
+    let scoreClass = "kb-score-low";
+    if (item.score >= 70) {
+      badgeClass = "badge-danger";
+      scoreClass = "kb-score-high";
+    } else if (item.score >= 45) {
+      badgeClass = "badge-warning";
+      scoreClass = "kb-score-mid";
+    }
+
+    const rowCls = item.hasDetail ? "batch-row-card batch-row-clickable" : "batch-row-card";
+    const rowTitle = item.hasDetail ? 'title="Klik untuk membuka detail analisis"' : "";
+    const detailHint = item.hasDetail ? `<span class="batch-row-hint">Ketuk untuk detail</span>` : "";
 
     return `
-      <tr>
-        <td>${item.idx}</td>
-        <td><code>${escapeHtml(item.preview)}</code></td>
-        <td><strong style="color: ${item.score >= 70 ? '#ef4444' : item.score >= 45 ? '#f59e0b' : '#10b981'};">${item.score}</strong> / 100</td>
-        <td><span class="badge ${badgeClass}">${escapeHtml(item.classification)}</span></td>
-        <td><span class="badge badge-dark" style="font-size: 0.68rem;">${escapeHtml(item.action)}</span></td>
+      <tr class="${rowCls}" data-batch-index="${rowIndex}" ${rowTitle}>
+        <td class="td-no">#${item.idx}</td>
+        <td class="td-snippet"><code>${escapeHtml(item.preview)}</code></td>
+        <td class="td-score"><strong class="kb-score-val ${scoreClass}">${item.score}</strong> / 100</td>
+        <td class="td-verdict"><span class="badge ${badgeClass}">${escapeHtml(item.classification)}</span></td>
+        <td class="td-action">
+          <span class="badge badge-dark">${escapeHtml(item.action)}</span>
+          ${detailHint}
+        </td>
       </tr>
     `;
   }).join("");
@@ -824,6 +970,9 @@ async function analyzeBatchContent() {
   btn.disabled = false;
   btn.textContent = "Jalankan Pemindaian";
   showToast(`Pemindaian selesai (${batchResults.length} entri).`, "success");
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    resultsContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 }
 
 function showToast(message, type = "info") {
@@ -880,6 +1029,7 @@ function navigateToPage(pageName) {
   if (window.location.hash !== `#${targetName}`) {
     history.replaceState(null, null, `#${targetName}`);
   }
+  window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function bindEvents() {
@@ -900,16 +1050,60 @@ function bindEvents() {
   };
 
   bindClick("btn-analyze", analyzeContent);
+  bindClick("btn-clear-input", clearInputFields);
+  bindClick("btn-scroll-input", () => {
+    focusPanel("input-panel", false);
+    const inputText = document.getElementById("input-text");
+    if (inputText) inputText.focus({ preventScroll: true });
+  });
   bindClick("btn-copy-report", copyTacticalReport);
   bindClick("btn-download-txt", () => downloadReport("txt"));
   bindClick("btn-download-json", () => downloadReport("json"));
   bindClick("btn-batch-analyze", analyzeBatchContent);
+  bindClick("btn-clear-batch-file", clearBatchFile);
   bindClick("btn-toggle-add-kb", toggleAddFactCheckForm);
   bindClick("btn-cancel-add-kb", toggleAddFactCheckForm);
   bindClick("btn-clear-history", clearHistory);
 
+  const inputText = document.getElementById("input-text");
+  if (inputText) {
+    inputText.addEventListener("input", () => {
+      setActivePreset(0);
+      updateCharCount();
+    });
+  }
+
+  const inputUrl = document.getElementById("input-url");
+  if (inputUrl) {
+    inputUrl.addEventListener("input", () => setActivePreset(0));
+  }
+
   const batchFile = document.getElementById("batch-file");
   if (batchFile) batchFile.addEventListener("change", handleBatchFileUpload);
+
+  const dropzone = document.getElementById("batch-dropzone");
+  if (dropzone) {
+    dropzone.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone.addEventListener("drop", (event) => {
+      event.preventDefault();
+      dropzone.classList.remove("dragover");
+      const file = event.dataTransfer?.files?.[0];
+      if (file) processBatchFile(file, batchFile);
+    });
+  }
+
+  const batchTbody = document.getElementById("batch-tbody");
+  if (batchTbody) {
+    batchTbody.addEventListener("click", (event) => {
+      const row = event.target.closest("tr.batch-row-clickable[data-batch-index]");
+      if (!row) return;
+      loadBatchItemDetail(Number(row.dataset.batchIndex));
+    });
+  }
 
   const kbForm = document.getElementById("kb-add-form");
   if (kbForm) kbForm.addEventListener("submit", submitNewFactCheck);
@@ -940,6 +1134,7 @@ function bindEvents() {
 
 document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
+  updateCharCount();
   const initialHash = window.location.hash.replace("#", "") || "analisis";
   navigateToPage(initialHash);
   loadKnowledgeBase();

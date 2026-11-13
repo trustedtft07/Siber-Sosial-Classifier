@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ff7654">
   <title>Siber Sosial - Verifikasi Konten</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,7 +87,7 @@
           </div>
 
           <div class="workspace-grid">
-            <div class="panel">
+            <div class="panel" id="input-panel">
               <div class="panel-header">
                 <h2>Input</h2>
               </div>
@@ -100,22 +101,29 @@
 
                 <div class="form-field">
                   <label for="input-text">Teks atau Pesan</label>
-                  <textarea id="input-text" class="field-textarea" rows="8" maxlength="15000" placeholder="Tempel pesan atau postingan yang ingin diperiksa..."></textarea>
+                  <textarea id="input-text" class="field-textarea" rows="7" maxlength="15000" placeholder="Tempel pesan atau postingan yang ingin diperiksa..."></textarea>
+                  <div class="input-meta-row">
+                    <span id="input-char-count" class="char-counter">0 / 15.000 karakter</span>
+                    <button type="button" id="btn-clear-input" class="btn-text-muted">Bersihkan</button>
+                  </div>
                 </div>
 
                 <div class="form-field">
                   <label for="input-url">Tautan Sumber (Opsional)</label>
-                  <input type="text" id="input-url" class="field-input field-mono" maxlength="2048" placeholder="https://contoh-situs.com/artikel">
+                  <input type="url" id="input-url" class="field-input field-mono" inputmode="url" autocapitalize="none" autocomplete="off" spellcheck="false" maxlength="2048" placeholder="https://contoh-situs.com/artikel">
                 </div>
 
                 <button type="button" id="btn-analyze" class="btn-primary btn-block">Periksa Konten</button>
               </div>
             </div>
 
-            <div class="panel">
+            <div class="panel" id="result-panel">
               <div class="panel-header">
                 <h2>Hasil Pemeriksaan</h2>
-                <span id="val-action" class="action-code">-</span>
+                <div class="result-header-right">
+                  <button type="button" id="btn-scroll-input" class="btn-jump-input">Ubah Input</button>
+                  <span id="val-action" class="action-code">-</span>
+                </div>
               </div>
               <div class="panel-body">
 
@@ -200,9 +208,15 @@
               </div>
 
               <div class="batch-toolbar">
-                <div class="form-field" style="margin-bottom: 0;">
+                <div class="form-field batch-upload-field">
                   <label for="batch-file">Atau unggah berkas (.txt / .csv, maks. 512 KB)</label>
-                  <input type="file" id="batch-file" class="field-file" accept=".txt,.csv">
+                  <div class="file-picker-box">
+                    <input type="file" id="batch-file" class="field-file-sr" accept=".txt,.csv">
+                    <label for="batch-file" id="batch-dropzone" class="file-dropzone">
+                      <span id="batch-file-name" class="file-dropzone-text">Pilih atau letakkan berkas .txt / .csv</span>
+                    </label>
+                    <button type="button" id="btn-clear-batch-file" class="btn-outline btn-clear-file" style="display: none;">Hapus</button>
+                  </div>
                 </div>
                 <button type="button" id="btn-batch-analyze" class="btn-primary">Jalankan Pemindaian</button>
               </div>
@@ -214,7 +228,7 @@
                 </div>
 
                 <div class="table-responsive">
-                  <table class="data-table">
+                  <table class="data-table mobile-cards">
                     <thead>
                       <tr>
                         <th width="50">No</th>
@@ -332,7 +346,7 @@
               </div>
 
               <div class="table-responsive">
-                <table class="data-table">
+                <table class="data-table mobile-cards">
                   <thead>
                     <tr>
                       <th width="95">ID</th>
