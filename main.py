@@ -1,4 +1,3 @@
-import json
 import os
 from datetime import datetime
 from pathlib import Path
@@ -114,7 +113,7 @@ async def serve_dashboard(request: Request):
 
 
 @app.post("/api/analyze")
-async def analyze_content(payload: AnalyzeRequest):
+def analyze_content(payload: AnalyzeRequest):
     raw_text = payload.text.strip() if payload.text else ""
     raw_url = payload.url.strip() if payload.url else None
 
@@ -151,13 +150,13 @@ async def analyze_content(payload: AnalyzeRequest):
 
 
 @app.post("/api/analyze/batch")
-async def analyze_batch(payload: BatchAnalyzeRequest):
+def analyze_batch(payload: BatchAnalyzeRequest):
     results = []
     threat_counts = {"KRITIS": 0, "TINGGI": 0, "SEDANG": 0, "RENDAH": 0}
     classification_counts = {
         "HOAX / DISINFORMASI": 0,
         "MISLEADING / PROVOKATIF": 0,
-        "PERLU VERIFIKASI": 0,
+        "PERLU VERIFIKASI (BELUM TERBUKTI)": 0,
         "VALID / TERKONFIRMASI": 0,
     }
 
@@ -208,7 +207,7 @@ async def analyze_batch(payload: BatchAnalyzeRequest):
         threat = item_result["risk_assessment"].get("threat_level", "RENDAH")
         threat_counts[threat] = threat_counts.get(threat, 0) + 1
 
-        cls_name = item_result["risk_assessment"].get("classification", "PERLU VERIFIKASI")
+        cls_name = item_result["risk_assessment"].get("classification", "PERLU VERIFIKASI (BELUM TERBUKTI)")
         classification_counts[cls_name] = classification_counts.get(cls_name, 0) + 1
 
         results.append(item_result)
@@ -234,8 +233,10 @@ async def get_fact_checks():
 
 
 @app.post("/api/fact-checks")
-async def create_fact_check(payload: FactCheckCreateRequest):
-    data_file = BASE_DIR / "data" / "fact_checks.json"
+def create_fact_check(payload: FactCheckCreateRequest):
+    verdict = payload.verdict.strip().upper()
+    if verdict not in {"SALAH", "MISLEADING", "BENAR"}:
+        raise HTTPException(status_code=400, detail="Verdict harus salah satu dari: SALAH, MISLEADING, atau BENAR.")
 
     category_slug = "".join(c for c in payload.threat_category if c.isalnum())[:3].upper()
     cat_code = category_slug or "GEN"
@@ -246,7 +247,7 @@ async def create_fact_check(payload: FactCheckCreateRequest):
         "id": generated_id,
         "claim": payload.claim.strip(),
         "fact": payload.fact.strip(),
-        "verdict": payload.verdict.strip().upper(),
+        "verdict": verdict,
         "threat_category": payload.threat_category.strip(),
         "source_agency": payload.source_agency.strip(),
         "reference_url": payload.reference_url.strip(),
@@ -254,17 +255,9 @@ async def create_fact_check(payload: FactCheckCreateRequest):
     }
 
     try:
-        current_data = []
-        if data_file.exists():
-            with open(data_file, "r", encoding="utf-8") as f:
-                current_data = json.load(f)
-        current_data.append(new_entry)
-        with open(data_file, "w", encoding="utf-8") as f:
-            json.dump(current_data, f, ensure_ascii=False, indent=2)
+        rag_engine.add_fact_check(new_entry, persist=True)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Gagal menyimpan arsip ke disk: {exc}")
-
-    rag_engine.add_fact_check(new_entry)
 
     return {
         "status": "success",

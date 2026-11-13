@@ -29,6 +29,13 @@ class XAIReasoner:
         else:
             reasons.append("Klaim belum terdata langsung di database klarifikasi; dianalisis sebagai isu berkembang.")
 
+        if analysis_result.get("fact_contradiction") and analysis_result.get("fact_contradiction_note"):
+            reasons.append(analysis_result["fact_contradiction_note"])
+        if analysis_result.get("zero_day_rumor"):
+            reasons.append(
+                "Pola terdeteksi sebagai rumor baru (Zero-Day Rumor): kombinasi gaya bahasa provokatif dan sumber tidak kredibel meski belum tercatat di arsip."
+            )
+
         triggers = []
         if linguistic_data.get("urgency_triggers"):
             triggers.append(f"urgensi/kepanikan ({', '.join(linguistic_data['urgency_triggers'])})")
@@ -48,7 +55,9 @@ class XAIReasoner:
         else:
             reasons.append("Struktur kalimat relatif wajar tanpa leksikon provokatif eksplisit.")
 
-        if source_data.get("is_chain_message"):
+        if source_data.get("typosquat_matches"):
+            reasons.append(source_data.get("notes", "Terindikasi domain tiruan (typosquatting)."))
+        elif source_data.get("is_chain_message"):
             reasons.append("Format teks teridentifikasi sebagai pesan berantai (forwarded/broadcast) tanpa rujukan primer.")
         elif source_data.get("source_tier") == "TIER_1_VERIFIED":
             reasons.append("Tautan merujuk pada domain kredibel (.mil.id, .go.id, atau media pers terverifikasi).")

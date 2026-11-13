@@ -33,6 +33,13 @@ function switchTab(mode) {
   const paneSingle = document.getElementById("pane-single");
   const paneBatch = document.getElementById("pane-batch");
 
+  if (!btnSingle || !btnBatch || !paneSingle || !paneBatch) {
+    if (typeof navigateToPage === "function") {
+      navigateToPage(mode === "batch" ? "batch" : "analisis");
+    }
+    return;
+  }
+
   if (mode === "single") {
     btnSingle.classList.add("active");
     btnBatch.classList.remove("active");
@@ -65,9 +72,9 @@ function updateProgressBar(barEl, percentage) {
   barEl.style.width = `${pct}%`;
 
   barEl.classList.remove("fill-green", "fill-yellow", "fill-red");
-  if (pct >= 75) {
+  if (pct >= 70) {
     barEl.classList.add("fill-red");
-  } else if (pct >= 50) {
+  } else if (pct >= 45) {
     barEl.classList.add("fill-yellow");
   } else {
     barEl.classList.add("fill-green");
@@ -78,8 +85,8 @@ async function analyzeContent() {
   const text = document.getElementById("input-text").value.trim();
   const url = document.getElementById("input-url").value.trim();
 
-  if (!text) {
-    showToast("Masukkan teks narasi yang ingin diverifikasi.", "info");
+  if (!text && !url) {
+    showToast("Masukkan teks narasi atau tautan URL berita yang ingin diverifikasi.", "info");
     return;
   }
 
@@ -91,7 +98,7 @@ async function analyzeContent() {
     const res = await fetch("/api/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, url: url || null })
+      body: JSON.stringify({ text: text || null, url: url || null })
     });
 
     if (!res.ok) {
@@ -102,7 +109,7 @@ async function analyzeContent() {
     const data = await res.json();
     latestAnalysisData = data;
     renderAnalysis(data);
-    saveToHistory(data, text);
+    saveToHistory(data, text || data.input_preview || url, url);
     showToast("Analisis kognitif berhasil diselesaikan.", "success");
   } catch (err) {
     showToast(`Terjadi kesalahan: ${err.message}`, "info");
@@ -125,10 +132,10 @@ function renderAnalysis(data) {
   const classBadge = document.getElementById("val-classification");
   classBadge.textContent = risk.classification;
 
-  if (risk.score >= 75) {
+  if (risk.score >= 70) {
     scoreEl.style.color = "#ef4444";
     classBadge.className = "badge-status-pill badge-danger";
-  } else if (risk.score >= 50) {
+  } else if (risk.score >= 45) {
     scoreEl.style.color = "#f59e0b";
     classBadge.className = "badge-status-pill badge-warning";
   } else {
@@ -165,18 +172,18 @@ function renderAnalysis(data) {
     ...(layers.linguistic.conspiracy_triggers || []),
     ...(layers.linguistic.authority_triggers || []),
     ...(layers.linguistic.sara_triggers || []),
-    ...(layers.linguistic.anonymous_claim_markers || [])
+    ...(layers.linguistic.anonymous_claim_triggers || layers.linguistic.anonymous_claim_markers || [])
   ];
 
   let chipsHtml = "";
   if (lingTriggers.length > 0) {
     chipsHtml = `
       <div class="chips-container">
-        ${lingTriggers.map(t => `<span class="badge-chip">⚠️ ${escapeHtml(t)}</span>`).join("")}
+        ${lingTriggers.map(t => `<span class="badge-chip">${escapeHtml(t)}</span>`).join("")}
       </div>
     `;
   } else {
-    chipsHtml = `<div class="chips-container"><span class="badge-chip badge-chip-green">✓ Tidak ditemukan frasa provokasi</span></div>`;
+    chipsHtml = `<div class="chips-container"><span class="badge-chip badge-chip-green">Tidak ditemukan frasa provokasi</span></div>`;
   }
 
   lingBox.innerHTML = `
@@ -190,6 +197,10 @@ function renderAnalysis(data) {
 
   // Layer 2 Detail Bukti RAG
   const evidBox = document.getElementById("box-evidence");
+  const contradictionHtml = (risk.fact_contradiction && risk.fact_contradiction_note)
+    ? `<div style="margin-top: 0.4rem; color: #b91c1c; font-weight: 600;">Kontradiksi Fakta: ${escapeHtml(risk.fact_contradiction_note)}</div>`
+    : "";
+
   if (risk.best_match && risk.best_match.similarity_score > 0.25) {
     const bm = risk.best_match;
     const isSalah = bm.verdict === 'SALAH';
@@ -197,15 +208,17 @@ function renderAnalysis(data) {
     const badgeClass = isSalah ? 'badge-danger' : isMisleading ? 'badge-warning' : 'badge-success';
 
     evidBox.innerHTML = `
-      <strong>Arsip Rujukan Terdekat:</strong> [${bm.id}] ${escapeHtml(bm.source_agency)} (${bm.date || '-'})<br>
-      <strong>Status Vonis:</strong> <span class="badge ${badgeClass}">${bm.verdict}</span> &bull; 
+      <strong>Arsip Rujukan Terdekat:</strong> [${escapeHtml(bm.id)}] ${escapeHtml(bm.source_agency)} (${escapeHtml(bm.date || '-')})<br>
+      <strong>Status Vonis:</strong> <span class="badge ${badgeClass}">${escapeHtml(bm.verdict)}</span> &bull; 
       <strong>Kemiripan Kosinus:</strong> ${(bm.similarity_score * 100).toFixed(1)}%<br>
       <strong>Fakta Terverifikasi:</strong> ${escapeHtml(bm.fact)}
+      ${contradictionHtml}
     `;
   } else {
     evidBox.innerHTML = `
       <strong>Status Bukti Fakta:</strong> Belum ada arsip klarifikasi yang cocok (&le; 25%). 
       <span style="color: #d97706; font-weight: 600;">Dianalisis sebagai narasi berkembang baru (Zero-Day Rumor).</span>
+      ${contradictionHtml}
     `;
   }
 
@@ -215,10 +228,20 @@ function renderAnalysis(data) {
     ? layers.source.detected_domains.join(", ")
     : "Tidak ada tautan eksplisit";
 
+  let scrapeHtml = "";
+  if (data.scraped_metadata) {
+    if (data.scraped_metadata.title) {
+      scrapeHtml = `<br><strong>Hasil Ekstraksi URL:</strong> ${escapeHtml(data.scraped_metadata.title)} (${data.scraped_metadata.word_count || 0} kata)`;
+    } else if (data.scraped_metadata.error) {
+      scrapeHtml = `<br><strong>Catatan Ekstraksi URL:</strong> ${escapeHtml(data.scraped_metadata.error)}`;
+    }
+  }
+
   srcBox.innerHTML = `
-    <strong>Tier Sumber:</strong> <code style="color: #3f6ad8; background-color: #e0f2fe; padding: 2px 6px; border-radius: 4px;">${layers.source.source_tier}</code> &bull; 
+    <strong>Tier Sumber:</strong> <code style="color: #3f6ad8; background-color: #e0f2fe; padding: 2px 6px; border-radius: 4px;">${escapeHtml(layers.source.source_tier)}</code> &bull; 
     <strong>Domain:</strong> ${escapeHtml(domainsStr)}<br>
     <strong>Catatan Kredibilitas:</strong> ${escapeHtml(layers.source.notes || 'Normal')}
+    ${scrapeHtml}
   `;
 
   // XAI & Rekomendasi
@@ -325,13 +348,15 @@ function downloadReport(format) {
 // 4. RIWAYAT PEMINDAIAN LOKAL / LOCALSTORAGE (SUBTASK 3.2)
 // ============================================================================
 
-function saveToHistory(analysisData, rawText) {
+function saveToHistory(analysisData, rawText, rawUrl = "") {
   try {
     let history = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || "[]");
+    const displayText = rawText || rawUrl || "-";
     const entry = {
       timestamp: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }),
-      rawText: rawText,
-      preview: rawText.length > 55 ? rawText.substring(0, 52) + "..." : rawText,
+      rawText: rawText || "",
+      rawUrl: rawUrl || "",
+      preview: displayText.length > 55 ? displayText.substring(0, 52) + "..." : displayText,
       score: analysisData.risk_assessment.score,
       classification: analysisData.risk_assessment.classification,
       data: analysisData
@@ -363,14 +388,14 @@ function renderHistory() {
     if (emptyEl) emptyEl.style.display = "none";
     listEl.innerHTML = history.map((item, idx) => {
       let badgeClass = "badge-success";
-      if (item.score >= 75) badgeClass = "badge-danger";
-      else if (item.score >= 50) badgeClass = "badge-warning";
+      if (item.score >= 70) badgeClass = "badge-danger";
+      else if (item.score >= 45) badgeClass = "badge-warning";
 
       return `
         <li class="history-item" onclick="loadHistoryItem(${idx})">
-          <span class="history-text" title="${escapeHtml(item.rawText)}">${escapeHtml(item.preview)}</span>
+          <span class="history-text" title="${escapeHtml(item.rawText || item.rawUrl || '')}">${escapeHtml(item.preview)}</span>
           <div class="history-meta">
-            <span style="font-size: 0.72rem; color: #6c757d;">${item.timestamp}</span>
+            <span style="font-size: 0.72rem; color: #6c757d;">${escapeHtml(item.timestamp)}</span>
             <span class="badge ${badgeClass}" style="padding: 0.15rem 0.45rem; font-size: 0.7rem;">${item.score}</span>
           </div>
         </li>
@@ -386,7 +411,8 @@ function loadHistoryItem(idx) {
     const history = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || "[]");
     const item = history[idx];
     if (item && item.data) {
-      document.getElementById("input-text").value = item.rawText;
+      document.getElementById("input-text").value = item.rawText || "";
+      document.getElementById("input-url").value = item.rawUrl || "";
       latestAnalysisData = item.data;
       renderAnalysis(item.data);
       if (typeof navigateToPage === "function") {
@@ -411,12 +437,29 @@ function clearHistory() {
 // 5. LIVE SEARCH, FILTER & TAMBAH ARSIP (SUBTASK 3.3)
 // ============================================================================
 
+function syncCategoryFilterOptions() {
+  const catFilter = document.getElementById("kb-filter-category");
+  if (!catFilter) return;
+
+  const existing = new Set(Array.from(catFilter.options).map(opt => opt.value));
+  cachedFactChecks.forEach(item => {
+    if (item.threat_category && !existing.has(item.threat_category)) {
+      const opt = document.createElement("option");
+      opt.value = item.threat_category;
+      opt.textContent = item.threat_category;
+      catFilter.appendChild(opt);
+      existing.add(item.threat_category);
+    }
+  });
+}
+
 async function loadKnowledgeBase() {
   try {
     const res = await fetch("/api/fact-checks");
     if (!res.ok) throw new Error("Gagal mengambil data dari server");
     const json = await res.json();
     cachedFactChecks = json.data || [];
+    syncCategoryFilterOptions();
     filterKnowledgeBase();
   } catch (e) {
     console.error("Gagal memuat arsip:", e);
@@ -467,6 +510,10 @@ function filterKnowledgeBase() {
     if (item.verdict === "SALAH") badgeClass = "badge-danger";
     else if (item.verdict === "MISLEADING") badgeClass = "badge-warning";
 
+    const safeRefUrl = item.reference_url && /^https?:\/\//i.test(item.reference_url)
+      ? `<a href="${escapeHtml(item.reference_url)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.72rem; color: #3f6ad8; text-decoration: underline;">Tautan Rujukan</a>`
+      : '';
+
     return `
       <tr>
         <td><code>${escapeHtml(item.id)}</code></td>
@@ -475,10 +522,10 @@ function filterKnowledgeBase() {
           <div style="font-weight: 600; color: #212529; margin-bottom: 0.2rem;">${escapeHtml(item.claim)}</div>
           <div style="font-size: 0.78rem; color: #6c757d;"><strong>Fakta:</strong> ${escapeHtml(item.fact)}</div>
         </td>
-        <td><span class="badge ${badgeClass}">${item.verdict}</span></td>
+        <td><span class="badge ${badgeClass}">${escapeHtml(item.verdict)}</span></td>
         <td>
           <div style="font-size: 0.8rem; font-weight: 500;">${escapeHtml(item.source_agency)}</div>
-          ${item.reference_url ? `<a href="${item.reference_url}" target="_blank" style="font-size: 0.72rem; color: #3f6ad8; text-decoration: underline;">Tautan Rujukan</a>` : ''}
+          ${safeRefUrl}
         </td>
       </tr>
     `;
@@ -493,7 +540,7 @@ function toggleAddFactCheckForm() {
   const isHidden = formEl.style.display === "none" || !formEl.style.display;
   formEl.style.display = isHidden ? "block" : "none";
   if (btnEl) {
-    btnEl.textContent = isHidden ? "✕ Tutup Form" : "+ Tambah Arsip Klarifikasi Baru";
+    btnEl.textContent = isHidden ? "Tutup Form" : "+ Tambah Arsip Baru";
   }
 }
 
@@ -508,7 +555,7 @@ async function submitNewFactCheck(e) {
   const url = document.getElementById("fc-url").value.trim();
 
   const newEntry = {
-    id,
+    id: id || null,
     threat_category: category,
     claim,
     fact,
@@ -530,25 +577,31 @@ async function submitNewFactCheck(e) {
     });
 
     if (!res.ok) {
-      // Fallback anggun: jika endpoint backend Orang 1 belum dibuat, simpan di memori client
-      console.warn("Backend POST /api/fact-checks belum tersedia. Menambahkan ke cache tabel lokal.");
+      const errJson = await res.json().catch(() => ({}));
+      throw new Error(errJson.detail || "Gagal menyimpan arsip klarifikasi ke server.");
     }
 
-    cachedFactChecks.unshift(newEntry);
+    const resJson = await res.json();
+    const savedEntry = resJson.data || newEntry;
+
+    const existingIdx = cachedFactChecks.findIndex(item => item.id === savedEntry.id);
+    if (existingIdx >= 0) {
+      cachedFactChecks[existingIdx] = savedEntry;
+    } else {
+      cachedFactChecks.unshift(savedEntry);
+    }
+
+    syncCategoryFilterOptions();
     filterKnowledgeBase();
     toggleAddFactCheckForm();
     e.target.reset();
-    showToast(`Arsip ${id} berhasil ditambahkan ke basis data!`, "success");
+    showToast(`Arsip ${savedEntry.id} berhasil ditambahkan ke basis data!`, "success");
   } catch (err) {
-    // Tetap tambahkan ke tabel lokal
-    cachedFactChecks.unshift(newEntry);
-    filterKnowledgeBase();
-    toggleAddFactCheckForm();
-    e.target.reset();
-    showToast(`Arsip ${id} disimpan ke sesi tampilan lokal.`, "success");
+    showToast(`Gagal menyimpan: ${err.message}`, "info");
+    console.error("Add FactCheck Error:", err);
   } finally {
     btnSave.disabled = false;
-    btnSave.textContent = "SIMPAN KE PANGKALAN DATA";
+    btnSave.textContent = "SIMPAN KE DATABASE";
   }
 }
 
@@ -575,11 +628,11 @@ async function analyzeBatchContent() {
     return;
   }
 
-  // Pisahkan narasi berdasarkan baris kosong ganda atau per baris panjang
+  const splitter = /\r?\n\s*\r?\n/.test(rawBatch) ? /\r?\n\s*\r?\n/ : /\r?\n/;
   const items = rawBatch
-    .split(/\n\s*\n/)
+    .split(splitter)
     .map(t => t.trim())
-    .filter(t => t.length > 10);
+    .filter(t => t.length > 5);
 
   if (items.length === 0) {
     showToast("Tidak ditemukan narasi yang valid untuk diproses.", "info");
@@ -588,7 +641,7 @@ async function analyzeBatchContent() {
 
   const btn = document.getElementById("btn-batch-analyze");
   btn.disabled = true;
-  btn.textContent = `MEMINDAI ${items.length} NARASI SECARA PARALEL...`;
+  btn.textContent = `MEMINDAI ${items.length} NARASI...`;
 
   const resultsContainer = document.getElementById("batch-results-container");
   const countBadge = document.getElementById("batch-count-badge");
@@ -599,59 +652,78 @@ async function analyzeBatchContent() {
   tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #38bdf8;">Sedang memproses pemindaian multi-narasi...</td></tr>`;
 
   const batchResults = [];
+  const CHUNK_SIZE = 20;
 
-  // Jalankan request ke /api/analyze secara berurutan atau per batch kecil
-  for (let i = 0; i < items.length; i++) {
-    const textItem = items[i];
+  for (let offset = 0; offset < items.length; offset += CHUNK_SIZE) {
+    const chunk = items.slice(offset, offset + CHUNK_SIZE);
+    const payload = {
+      items: chunk.map(entry => (/^https?:\/\/\S+$/i.test(entry) ? { text: null, url: entry } : { text: entry, url: null }))
+    };
+
     try {
-      const res = await fetch("/api/analyze", {
+      const res = await fetch("/api/analyze/batch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textItem, url: null })
+        body: JSON.stringify(payload)
       });
-      if (res.ok) {
-        const json = await res.json();
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.detail || "Gagal memproses batch");
+      }
+
+      const json = await res.json();
+      (json.results || []).forEach((resItem, localIdx) => {
+        const rawEntry = chunk[localIdx] || "";
+        const globalIdx = offset + localIdx + 1;
+
+        if (resItem.status === "error" || !resItem.risk_assessment) {
+          batchResults.push({
+            idx: globalIdx,
+            preview: rawEntry.length > 70 ? rawEntry.substring(0, 68) + "..." : rawEntry,
+            score: 0,
+            classification: "GAGAL ANALISIS",
+            action: resItem.message || "ERROR"
+          });
+        } else {
+          const previewSrc = resItem.input_preview || rawEntry;
+          batchResults.push({
+            idx: globalIdx,
+            preview: previewSrc.length > 70 ? previewSrc.substring(0, 68) + "..." : previewSrc,
+            score: resItem.risk_assessment.score,
+            classification: resItem.risk_assessment.classification,
+            action: resItem.risk_assessment.action_code || "REVIEW"
+          });
+        }
+      });
+    } catch (e) {
+      chunk.forEach((rawEntry, localIdx) => {
         batchResults.push({
-          idx: i + 1,
-          preview: textItem.length > 70 ? textItem.substring(0, 68) + "..." : textItem,
-          score: json.risk_assessment.score,
-          classification: json.risk_assessment.classification,
-          action: json.risk_assessment.action_code || "REVIEW"
-        });
-      } else {
-        batchResults.push({
-          idx: i + 1,
-          preview: textItem.substring(0, 50) + "...",
+          idx: offset + localIdx + 1,
+          preview: rawEntry.length > 50 ? rawEntry.substring(0, 48) + "..." : rawEntry,
           score: 0,
-          classification: "GAGAL ANALISIS",
+          classification: "ERROR KONEKSI",
           action: "ERROR"
         });
-      }
-    } catch (e) {
-      batchResults.push({
-        idx: i + 1,
-        preview: textItem.substring(0, 50) + "...",
-        score: 0,
-        classification: "ERROR KONEKSI",
-        action: "ERROR"
       });
     }
-    countBadge.textContent = `Memproses ${i + 1} / ${items.length} narasi...`;
+
+    countBadge.textContent = `Memproses ${Math.min(offset + CHUNK_SIZE, items.length)} / ${items.length} narasi...`;
   }
 
   countBadge.textContent = `${batchResults.length} Narasi Selesai Diproses`;
 
   tbody.innerHTML = batchResults.map(item => {
     let badgeClass = "badge-success";
-    if (item.score >= 75) badgeClass = "badge-danger";
-    else if (item.score >= 50) badgeClass = "badge-warning";
+    if (item.score >= 70) badgeClass = "badge-danger";
+    else if (item.score >= 45) badgeClass = "badge-warning";
 
     return `
       <tr>
         <td>${item.idx}</td>
         <td><code>${escapeHtml(item.preview)}</code></td>
-        <td><strong style="color: ${item.score >= 75 ? '#d92550' : item.score >= 50 ? '#f7b924' : '#3ac47d'};">${item.score}</strong> / 100</td>
-        <td><span class="badge ${badgeClass}">${item.classification}</span></td>
+        <td><strong style="color: ${item.score >= 70 ? '#d92550' : item.score >= 45 ? '#f7b924' : '#3ac47d'};">${item.score}</strong> / 100</td>
+        <td><span class="badge ${badgeClass}">${escapeHtml(item.classification)}</span></td>
         <td><span class="badge badge-dark" style="font-size: 0.68rem;">${escapeHtml(item.action)}</span></td>
       </tr>
     `;

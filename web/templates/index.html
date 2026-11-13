@@ -275,12 +275,12 @@
                 </div>
 
                 <div class="form-group-modern">
-                  <label for="input-text">Teks Narasi / Pesan Berantai (WA/Telegram/Medsos):</label>
+                  <label for="input-text">Teks Narasi / Pesan Berantai (Opsional jika URL diisi):</label>
                   <textarea id="input-text" class="input-modern-textarea" rows="6" placeholder="Tempelkan pesan atau postingan teks yang ingin diverifikasi di sini..."></textarea>
                 </div>
 
                 <div class="form-group-modern">
-                  <label for="input-url">Tautan Berita / Sumber URL (Opsional):</label>
+                  <label for="input-url">Tautan Berita / Sumber URL (Auto-Scrape jika teks kosong):</label>
                   <input type="text" id="input-url" class="input-modern-text" placeholder="https://domain-berita.com/artikel-terkait">
                 </div>
 
@@ -444,8 +444,8 @@
               <form onsubmit="submitNewFactCheck(event)">
                 <div class="form-row-grid">
                   <div class="form-group-modern">
-                    <label for="fc-id">ID Klarifikasi (Unik):</label>
-                    <input type="text" id="fc-id" class="input-modern-text" placeholder="FC-DEF-005" required>
+                    <label for="fc-id">ID Klarifikasi (Opsional, otomatis jika kosong):</label>
+                    <input type="text" id="fc-id" class="input-modern-text" placeholder="FC-DEF-010">
                   </div>
                   <div class="form-group-modern">
                     <label for="fc-agency">Instansi Sumber:</label>
@@ -458,10 +458,12 @@
                     <label for="fc-category">Kategori Ancaman:</label>
                     <select id="fc-category" class="input-modern-select" required>
                       <option value="Disinformasi Pertahanan">Disinformasi Pertahanan</option>
-                      <option value="Provokasi Separatisme">Provokasi Separatisme</option>
-                      <option value="Sabotase Informasi">Sabotase Informasi</option>
-                      <option value="Penipuan Rekrutmen">Penipuan Rekrutmen</option>
-                      <option value="Polarisasi Sosial">Polarisasi Sosial</option>
+                      <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA & Ketertiban</option>
+                      <option value="Manipulasi Kebijakan Publik">Manipulasi Kebijakan Publik</option>
+                      <option value="Penipuan Siber & Scam">Penipuan Siber & Scam</option>
+                      <option value="Operasi Bantuan Kemanusiaan">Operasi Bantuan Kemanusiaan</option>
+                      <option value="Rekrutmen & Informasi Resmi">Rekrutmen & Informasi Resmi</option>
+                      <option value="Propaganda & Separatisme">Propaganda & Separatisme</option>
                     </select>
                   </div>
                   <div class="form-group-modern">
@@ -514,10 +516,12 @@
                   <select id="kb-filter-category" class="input-modern-select" onchange="filterKnowledgeBase()">
                     <option value="">Semua Kategori</option>
                     <option value="Disinformasi Pertahanan">Disinformasi Pertahanan</option>
-                    <option value="Provokasi Separatisme">Provokasi Separatisme</option>
-                    <option value="Sabotase Informasi">Sabotase Informasi</option>
-                    <option value="Penipuan Rekrutmen">Penipuan Rekrutmen</option>
-                    <option value="Polarisasi Sosial">Polarisasi Sosial</option>
+                    <option value="Polarisasi SARA & Ketertiban">Polarisasi SARA & Ketertiban</option>
+                    <option value="Manipulasi Kebijakan Publik">Manipulasi Kebijakan Publik</option>
+                    <option value="Penipuan Siber & Scam">Penipuan Siber & Scam</option>
+                    <option value="Operasi Bantuan Kemanusiaan">Operasi Bantuan Kemanusiaan</option>
+                    <option value="Rekrutmen & Informasi Resmi">Rekrutmen & Informasi Resmi</option>
+                    <option value="Propaganda & Separatisme">Propaganda & Separatisme</option>
                   </select>
 
                   <select id="kb-filter-verdict" class="input-modern-select" onchange="filterKnowledgeBase()">
