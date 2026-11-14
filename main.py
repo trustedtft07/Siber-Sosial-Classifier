@@ -196,7 +196,7 @@ def _extract_client_ip(request: Request) -> str:
 
 
 app = FastAPI(
-    title="Siber Sosial - Verifikasi Konten & Disinformasi",
+    title="Cek Narasi - Verifikasi Konten & Disinformasi",
     description="Engine verifikasi konten dan disinformasi media sosial berbasis model hibrida 3 lapisan.",
     version="1.1.0",
 )

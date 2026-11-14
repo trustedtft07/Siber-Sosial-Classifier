@@ -1,6 +1,6 @@
-# Siber Sosial - Verifikasi & Klasifikasi Konten
+# Cek Narasi - Verifikasi & Klasifikasi Konten
 
-Aplikasi verifikasi dan klasifikasi disinformasi media sosial yang dikembangkan untuk Cyber Hackathon. Sistem memeriksa narasi teks maupun tautan rujukan guna mendeteksi indikasi hoaks, penipuan digital, dan manipulasi informasi publik.
+Cek Narasi adalah aplikasi verifikasi dan klasifikasi disinformasi media sosial yang dikembangkan untuk Cyber Hackathon. Sistem memeriksa narasi teks maupun tautan rujukan guna mendeteksi indikasi hoaks, penipuan digital, dan manipulasi informasi publik.
 
 ---
 
@@ -38,7 +38,7 @@ siber-sosial-classifier/
 │   └── provocative_lexicon.json# Kamus frasa pemicu kepanikan dan manipulasi
 ├── web/
 │   ├── static/                 # Aset CSS dan JS antarmuka web
-│   └── templates/index.html    # Antarmuka web Siber Sosial
+│   └── templates/index.html    # Antarmuka web Cek Narasi
 ├── test_pipeline.py            # Skrip pengujian otomatis pipeline
 ├── main.py                     # Entrypoint REST API FastAPI & server web
 ├── Dockerfile                  # Konfigurasi container

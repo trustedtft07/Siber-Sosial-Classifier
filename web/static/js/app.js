@@ -1,7 +1,6 @@
 /**
- * Siber Sosial - Cognitive Domain Hoax Classifier
+ * Cek Narasi - Verifikasi & Klasifikasi Konten
  * Frontend Controller
- * Peran: Orang 3 (Frontend Architecture & Client Logic)
  */
 
 const PRESETS = {
@@ -326,7 +325,7 @@ function generateTacticalReportText(data) {
   const now = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
 
   let text = `================================================================================\n`;
-  text += `   LAPORAN VERIFIKASI KONTEN - SIBER SOSIAL\n`;
+  text += `   LAPORAN VERIFIKASI KONTEN - CEK NARASI\n`;
   text += `================================================================================\n`;
   text += `WAKTU ANALISIS       : ${now} WIB\n`;
   text += `SKOR RISIKO HOAKS    : ${r.score} / 100\n`;
@@ -405,7 +404,7 @@ function downloadReport(format) {
 
   if (format === "json") {
     blob = new Blob([JSON.stringify(latestAnalysisData, null, 2)], { type: "application/json" });
-    filename = `Laporan-Siber-Sosial-${timestamp}.json`;
+    filename = `Laporan-Cek-Narasi-${timestamp}.json`;
   } else {
     const reportText = generateTacticalReportText(latestAnalysisData);
     blob = new Blob([reportText], { type: "text/plain;charset=utf-8" });
